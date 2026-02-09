@@ -45,11 +45,13 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
 
-
     // Sau khi thêm depen security thì swagger yêu cầu phải username + password
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(AbstractHttpConfigurer::disable)
+        httpSecurity.csrf(AbstractHttpConfigurer::disable).exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                )
+
                 // thiết lập api đc phép request non token
                 // ex: ngoại trừ auth thì phải kèm token
                 .authorizeHttpRequests(author

@@ -5,6 +5,8 @@ import com.example.demo.dto.request.AddressRequestDTO;
 import com.example.demo.dto.request.UserRequestDTO;
 import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.UserResponse;
+import com.example.demo.exception.UserErrorCode;
+import com.example.demo.exception.custom.AppException;
 import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.model.Address;
 import com.example.demo.model.User;
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public Long saveUser(UserRequestDTO requestDTO) {
         if (userRepository.existsByUsername(requestDTO.getUsername())) {
-            throw new ResourceNotFoundException("username is existed!");
+            throw new AppException(UserErrorCode.USER_EXISTED);
         }
 
         User user = User.builder()

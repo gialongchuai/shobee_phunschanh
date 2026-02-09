@@ -4,12 +4,10 @@ import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.service.JwtService;
 import com.example.demo.util.TokenType;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -134,10 +132,6 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private Claims extractAllClaims(String token, TokenType type) {
-        try {
-            return Jwts.parserBuilder().setSigningKey(getKey(type)).build().parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException | SignatureException ex) {
-            throw new ResourceNotFoundException("Access Denied with error messages: " + ex.getMessage());
-        }
+        return Jwts.parserBuilder().setSigningKey(getKey(type)).build().parseClaimsJws(token).getBody();
     }
 }

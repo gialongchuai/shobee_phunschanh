@@ -5,6 +5,9 @@ import com.example.demo.dto.request.ResetPasswordRequestDTO;
 import com.example.demo.dto.request.SignInRequestDTO;
 import com.example.demo.dto.request.TokenResetPasswordDTO;
 import com.example.demo.dto.response.TokenResponse;
+import com.example.demo.exception.SecurityErrorCode;
+import com.example.demo.exception.UserErrorCode;
+import com.example.demo.exception.custom.AppException;
 import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.model.CustomUserDetails;
 import com.example.demo.model.Token;
@@ -76,7 +79,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .userId(user.getId())
                     .build();
         } catch (AuthenticationException e) {
-            throw new RuntimeException(e);
+            throw new AppException(SecurityErrorCode.UNAUTHENTICATED);
         }
     }
 
@@ -86,7 +89,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // validate
         final String refreshToken = request.getHeader(AUTHORIZATION);
         if (StringUtils.isBlank(refreshToken)) {
-            throw new ResourceNotFoundException("Token must be not blank!");
+            throw new AppException(SecurityErrorCode.TOKEN_MISSING);
         }
         log.info("Token: {}", refreshToken);
 
@@ -95,14 +98,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         log.info("Username: {}", username);
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> {
-            throw new ResourceNotFoundException("User not found!");
+            throw new AppException(UserErrorCode.USER_NOT_EXISTED);
         });
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         log.info("User: {}", user.getId());
         if (!jwtService.isValid(refreshToken, TokenType.REFRESH_TOKEN, customUserDetails)) { // nếu không quăng lỗi
-            throw new ResourceNotFoundException("Token is invalid!");
+            throw new AppException(SecurityErrorCode.TOKEN_INVALID);
         } // ô cê thì tạo mới access mới
 
         Set<String> authorities = new HashSet<>();
@@ -122,7 +125,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String logout(HttpServletRequest request) {
         final String accessToken = request.getHeader(AUTHORIZATION);
         if (StringUtils.isBlank(accessToken)) {
-            throw new ResourceNotFoundException("Token must be not blank!");
+            throw new AppException(SecurityErrorCode.TOKEN_MISSING);
         }
 
         // Token kèm header phải là access thì mới cho logout
@@ -140,7 +143,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
         if (!customUserDetails.isEnabled()) {
-            throw new ResourceNotFoundException("User is inactive");
+            throw new AppException(UserErrorCode.USER_IS_LOCKED);
         }
 
         Set<String> authorities = new HashSet<>();
@@ -165,13 +168,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         final String username = jwtService.extractUsername(secretKey, TokenType.RESET_TOKEN);
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> {
-            throw new ResourceNotFoundException("User not found!");
+            throw new AppException(UserErrorCode.ROLE_USER_NOT_EXISTED);
         });
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         if (!jwtService.isValid(secretKey, TokenType.RESET_TOKEN, customUserDetails)) {
-            throw new ResourceNotFoundException("Token is invalid!");
+            throw new AppException(SecurityErrorCode.TOKEN_INVALID);
         }
         return "Reset!";
     }
@@ -181,7 +184,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = isValidToken(requestDTO.getSecretKey());
 
         if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {
-            throw new ResourceNotFoundException("Confirm Password is false!");
+            throw new AppException(UserErrorCode.CONFIRM_PASSWORD_INVALID);
         }
         user.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
         userRepository.save(user);
@@ -196,10 +199,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         if (!customUserDetails.isEnabled()) {
-            throw new ResourceNotFoundException("User is inactive");
+            throw new AppException(UserErrorCode.USER_IS_LOCKED);
         }
         if (!jwtService.isValid(secretKey, TokenType.RESET_TOKEN, customUserDetails)) {
-            throw new ResourceNotFoundException("Token is invalid!");
+            throw new AppException(SecurityErrorCode.TOKEN_INVALID);
         }
 
         return user;

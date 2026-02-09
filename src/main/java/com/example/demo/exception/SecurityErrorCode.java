@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatusCode;
 public enum SecurityErrorCode implements BaseErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error!", HttpStatus.INTERNAL_SERVER_ERROR),
     UNAUTHENTICATED(9001, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
-    UNAUTHORIZED(9002, "You don't have permission!", HttpStatus.FORBIDDEN);
+    UNAUTHORIZED(9002, "You don't have permission!", HttpStatus.FORBIDDEN),
+    TOKEN_MISSING(9003, "Token must not be blank!", HttpStatus.UNAUTHORIZED),
+    TOKEN_INVALID(9004, "Token is invalid or expired!", HttpStatus.UNAUTHORIZED);
 
     int code;
     String message;
