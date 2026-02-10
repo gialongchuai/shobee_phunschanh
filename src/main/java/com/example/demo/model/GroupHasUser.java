@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user_has_group")

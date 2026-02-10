@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    Long saveUser(UserRequestDTO requestDTO);
+    UserResponse saveUser(UserRequestDTO requestDTO);
     void updateUser(Long userId, UserRequestDTO requestDTO);
     void changeStatusUser(Long userId, UserStatus userStatus);
     void deleteUser(Long userId);

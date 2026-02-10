@@ -33,8 +33,8 @@ public class UserController {
 
     @Operation(summary = "Add user", description = "API create a user!")
     @PostMapping("/")
-    public ApiResponse<Long> addUser(@Valid @RequestBody UserRequestDTO requestDTO) {
-        log.info("Dang them 1 user: " + requestDTO);
+    public ApiResponse<UserResponse> addUser(@Valid @RequestBody UserRequestDTO requestDTO) {
+        log.info("Dang add user voi username: " + requestDTO.getUsername() + "...");
         return new ApiResponse<>(HttpStatus.CREATED.value(), Translator.toLocale("user.add.success"), userService.saveUser(requestDTO));
 
 //        try {

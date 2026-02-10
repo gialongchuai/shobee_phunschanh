@@ -29,6 +29,10 @@ nó hứng rồi return ra jsx tương thích
 
 ---
 
+Xóa cái toString tránh debug gọi lồng qua toString giữa các entity mãi không debug được
+
+---
+
 ## ⌨️ Phím tắt IntelliJ
 
 | Phím tắt           | Chức năng                |

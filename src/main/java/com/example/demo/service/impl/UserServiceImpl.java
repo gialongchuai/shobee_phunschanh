@@ -3,18 +3,24 @@ package com.example.demo.service.impl;
 import com.example.demo.configuration.Translator;
 import com.example.demo.dto.request.AddressRequestDTO;
 import com.example.demo.dto.request.UserRequestDTO;
-import com.example.demo.dto.response.PageResponse;
-import com.example.demo.dto.response.UserResponse;
+import com.example.demo.dto.response.*;
 import com.example.demo.exception.UserErrorCode;
 import com.example.demo.exception.custom.AppException;
 import com.example.demo.exception.custom.ResourceNotFoundException;
+import com.example.demo.mapper.AddressMapper;
+import com.example.demo.mapper.RoleMapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Address;
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import com.example.demo.model.UserHasRole;
 import com.example.demo.repository.AddressRepository;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.custom.SearchRepository;
 import com.example.demo.repository.custom.specification.UserSpecificationBuilder;
 import com.example.demo.service.UserService;
+import com.example.demo.util.RoleType;
 import com.example.demo.util.UserStatus;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -45,50 +51,69 @@ public class UserServiceImpl implements UserService {
     SearchRepository searchRepository;
     EmailServiceImpl emailService;
     PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
 
 //    KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long saveUser(UserRequestDTO requestDTO) {
+    public UserResponse saveUser(UserRequestDTO requestDTO) {
+        List<AddressResponse> addressResponses = new ArrayList<>();
+        Set<GroupHasUserResponse> groupHasUserResponses = new HashSet<>();
+        Set<UserHasRoleResponse> userHasRoleResponses = new HashSet<>();
+
         if (userRepository.existsByUsername(requestDTO.getUsername())) {
             throw new AppException(UserErrorCode.USER_EXISTED);
         }
 
-        User user = User.builder()
-                .firstName(requestDTO.getFirstName())
-                .lastName(requestDTO.getLastName())
-                .dateOfBirth(requestDTO.getDateOfBirth())
-                .gender(requestDTO.getGender())
-                .phone(requestDTO.getPhone())
-                .email(requestDTO.getEmail())
-                .username(requestDTO.getUsername())
-                .password(passwordEncoder.encode((requestDTO.getPassword())))
-                .status(requestDTO.getStatus())
-                .type(requestDTO.getType())
+        User user = UserMapper.toUser(requestDTO);
+        user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
+
+        // Always user when create account
+        Role role = roleRepository.findByName(RoleType.user.toString()).orElseThrow(() -> {
+            throw new AppException(UserErrorCode.ROLE_USER_NOT_EXISTED);
+        });
+
+        List<UserHasRole> userHasRoles = new ArrayList<>();
+        UserHasRole userHasRole = UserHasRole.builder()
+                .user(user)
+                .role(role)
                 .build();
+        userHasRoles.add(userHasRole);
+        user.setUserHasRoles(userHasRoles);
+
         User userRes = userRepository.save((user));
+        UserResponse userResponse = new UserResponse();
 
         if (userRes.getId() != null) {
+            userResponse = UserMapper.toUserResponse(userRes);
             List<Address> addresses = new ArrayList<>();
             for (AddressRequestDTO addressRequestDTO : requestDTO.getAddresses()) {
-                Address address = Address.builder()
-                        .apartmentNumber(addressRequestDTO.getApartmentNumber())
-                        .floor(addressRequestDTO.getFloor())
-                        .building(addressRequestDTO.getBuilding())
-                        .streetNumber(addressRequestDTO.getStreetNumber())
-                        .street(addressRequestDTO.getStreet())
-                        .city(addressRequestDTO.getCity())
-                        .country(addressRequestDTO.getCountry())
-                        .addressType(addressRequestDTO.getAddressType())
-                        .build();
+                Address address = AddressMapper.toAddress(addressRequestDTO);
+
                 address.setUser(userRes);
                 addresses.add(address);
             }
-            addressRepository.saveAll(addresses);
+            List<Address> addressList = addressRepository.saveAll(addresses);
+            for (Address address : addressList) {
+                AddressResponse addressResponse = AddressMapper.toAddressResponse(address);
+
+                // add to list
+                addressResponses.add(addressResponse);
+            }
+
+            // add to userResponse
+            userResponse.setAddressResponses(addressResponses);
             log.info("Addresses of user added successfully!");
         }
+        RoleResponse roleResponse = RoleMapper.toRoleResponse(role);
+        UserHasRoleResponse userHasRoleResponse = UserMapper.toUserHasRoleResponse(userResponse, roleResponse);
+        userHasRoleResponses.add(userHasRoleResponse);
+
+        userResponse.setUserHasRoleResponses(userHasRoleResponses);
+
         log.info("User added successfully!");
+
 
 //        // === Cách 01 === Truyền thẳng qua send String bình thường : Tầm 4 5 s
 //        try {
@@ -105,40 +130,15 @@ public class UserServiceImpl implements UserService {
 //            kafkaTemplate.send("confirm-account-topic", messages);
 //        }
 
-        return userRes.getId();
-    }
-
-    private Set<Address> convertToAddress(Set<Address> addresses) {
-        Set<Address> result = new HashSet<>();
-        addresses.forEach(address -> {
-            result.add(Address.builder()
-                    .apartmentNumber(address.getApartmentNumber())
-                    .floor(address.getFloor())
-                    .building(address.getBuilding())
-                    .streetNumber(address.getStreetNumber())
-                    .street(address.getStreet())
-                    .city(address.getCity())
-                    .country(address.getCountry())
-                    .addressType(address.getAddressType())
-                    .build());
-        });
-        return result;
+        return userResponse;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateUser(Long userId, UserRequestDTO requestDTO) {
         User user = getUserById(userId);
-        user.setFirstName(requestDTO.getFirstName());
-        user.setLastName(requestDTO.getLastName());
-        user.setDateOfBirth(requestDTO.getDateOfBirth());
-        user.setGender(requestDTO.getGender());
-        user.setPhone(requestDTO.getPhone());
-        user.setEmail(requestDTO.getEmail());
-        user.setUsername(requestDTO.getUsername());
+        UserMapper.updateUser(user, requestDTO);
         user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
-        user.setStatus(requestDTO.getStatus());
-        user.setType(requestDTO.getType());
 
         userRepository.save(user);
         log.info("Updated user without address!");
@@ -156,14 +156,7 @@ public class UserServiceImpl implements UserService {
             if (addressDTO == null) {
                 addressDTO = new Address();
             }
-            addressDTO.setApartmentNumber(address.getApartmentNumber());
-            addressDTO.setFloor(address.getFloor());
-            addressDTO.setBuilding(address.getBuilding());
-            addressDTO.setStreetNumber(address.getStreetNumber());
-            addressDTO.setStreet(address.getStreet());
-            addressDTO.setCity(address.getCity());
-            addressDTO.setCountry(address.getCountry());
-            addressDTO.setAddressType(address.getAddressType());
+            AddressMapper.updateAddress(addressDTO, address);
 
             // Set lại user quan trọng nhất !!!
             addressDTO.setUser(user);
@@ -240,8 +233,7 @@ public class UserServiceImpl implements UserService {
         Page<User> users = userRepository.findAll(pageable);
 
         List<UserResponse> userResponses = users.stream().map(user -> {
-            return UserResponse.builder()
-                    .id(user.getId())
+            UserResponse userResponse = UserResponse.builder()
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .email(user.getEmail())
@@ -254,6 +246,8 @@ public class UserServiceImpl implements UserService {
                     .status(user.getStatus())
                     //                    .addresses(user.getAddresses())
                     .build();
+            userResponse.setId(user.getId());
+            return userResponse;
         }).toList();
 
         return PageResponse.builder()
@@ -294,8 +288,7 @@ public class UserServiceImpl implements UserService {
         Page<User> users = userRepository.findAll(pageable);
 
         List<UserResponse> userResponses = users.stream().map(user -> {
-            return UserResponse.builder()
-                    .id(user.getId())
+            UserResponse userResponse = UserResponse.builder()
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .email(user.getEmail())
@@ -308,6 +301,8 @@ public class UserServiceImpl implements UserService {
                     .status(user.getStatus())
 //                    .addresses(user.getAddresses())
                     .build();
+            userResponse.setId(user.getId());
+            return userResponse;
         }).toList();
 
         return PageResponse.builder()
@@ -391,6 +386,6 @@ public class UserServiceImpl implements UserService {
 
 
     private User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(Translator.toLocale("user.not.found")));
+        return userRepository.findById(userId).orElseThrow(() -> new AppException(UserErrorCode.USER_NOT_EXISTED));
     }
 }

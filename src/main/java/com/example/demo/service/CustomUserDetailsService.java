@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.configuration.Translator;
+import com.example.demo.exception.SecurityErrorCode;
+import com.example.demo.exception.custom.AppException;
 import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.model.CustomUserDetails;
 import com.example.demo.model.User;
@@ -18,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(Translator.toLocale("user.not.found")));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new AppException(SecurityErrorCode.UNAUTHENTICATED));
         return new CustomUserDetails(user);
     }
 }

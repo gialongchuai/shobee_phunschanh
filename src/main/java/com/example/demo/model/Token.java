@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_token")

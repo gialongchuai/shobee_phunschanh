@@ -55,6 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             authentication.getAuthorities().forEach(authority
                     -> authorities.add(authority.getAuthority()));
 
+
             CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
             // Không cần thiết bởi vì đâu còn dùng nữa đâu mà set, có giải thích trong readme

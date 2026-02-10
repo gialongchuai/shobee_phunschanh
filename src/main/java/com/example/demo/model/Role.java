@@ -6,13 +6,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
 @Getter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_role")
@@ -26,11 +27,11 @@ public class Role extends AbstractEntity<Integer> {
 //    private String description;
 
     @OneToMany(mappedBy = "role")
-    private Set<RoleHasPermission> roleHasPermissions = new HashSet<>();
+    private List<RoleHasPermission> roleHasPermissions = new ArrayList<>();
 
     @OneToMany(mappedBy = "role")
-    private Set<UserHasRole> userHasRoles = new HashSet<>();
+    private List<UserHasRole> userHasRoles = new ArrayList<>();
 
     @OneToMany(mappedBy = "role")
-    private Set<Group> groups = new HashSet<>();
+    private List<Group> groups = new ArrayList<>();
 }

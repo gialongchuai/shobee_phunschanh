@@ -28,6 +28,9 @@ export default function Login() {
     loginMutation.mutate(data, {
       onSuccess: (data) => {
         console.log(data);
+      },
+      onError: (error) => { 
+        console.log(error);
       }
     })
   });

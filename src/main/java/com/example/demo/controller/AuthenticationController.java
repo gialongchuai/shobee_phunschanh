@@ -131,7 +131,7 @@ public class AuthenticationController {
 
     // validate 2 cái pass gửi, còn token được gửi kèm khi người dùng bấm vào nút change password của mình.
     @Operation(summary = "user change password", description = "API for user change password!")
-    @PostMapping("/change-password")
+//    @PostMapping("/change-password")
     public ApiResponse<String> changePassword(@RequestBody ResetPasswordRequestDTO request) {
         log.info("Trying to access when user change password (finish step) ...");
         return new ApiResponse<>(HttpStatus.OK.value(), Translator.toLocale("auth.password.change.success"), authenticationService.changePassword(request));

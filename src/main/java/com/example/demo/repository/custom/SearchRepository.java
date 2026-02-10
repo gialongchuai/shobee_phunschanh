@@ -1,5 +1,6 @@
 package com.example.demo.repository.custom;
 
+import com.example.demo.dto.response.AddressResponse;
 import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.UserResponse;
 import com.example.demo.model.Address;
@@ -322,7 +323,6 @@ public class SearchRepository {
     public static List<UserResponse> getUsersIgnoreUserInAddresses(List<User> users) {
         List<UserResponse> userResponses = users.stream().map(user -> {
             UserResponse userResponse = UserResponse.builder()
-                    .id(user.getId())
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .dateOfBirth(user.getDateOfBirth())
@@ -334,10 +334,12 @@ public class SearchRepository {
                     .status(user.getStatus())
                     .type(user.getType())
                     .build();
+            userResponse.setId(user.getId());
+
             if (user.getAddresses() != null) {
-                Set<Address> cleanAddress = user.getAddresses().stream()
+                List<AddressResponse> cleanAddress = user.getAddresses().stream()
                         .map(address -> {
-                            return Address.builder()
+                            return AddressResponse.builder()
                                     .apartmentNumber(address.getApartmentNumber())
                                     .floor(address.getFloor())
                                     .building(address.getBuilding())
@@ -347,10 +349,10 @@ public class SearchRepository {
                                     .country(address.getCountry())
                                     .addressType(address.getAddressType())
                                     .build();
-                        }).collect(Collectors.toSet());
-                userResponse.setAddresses(cleanAddress);
+                        }).collect(Collectors.toList());
+                userResponse.setAddressResponses(cleanAddress);
             } else {
-                userResponse.setAddresses(new HashSet<>());
+                userResponse.setAddressResponses(new ArrayList<>());
             }
 
             return userResponse;

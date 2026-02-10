@@ -1,4 +1,4 @@
-import type { AuthResponse } from "../types/auth.type";
+import type { AuthResponse } from "../types/auth";
 import http from "../utils/http";
 
 export const login = (body: { username: string; password: string }) =>

@@ -13,7 +13,6 @@ import java.util.*;
 @Setter
 @Getter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tbl_user")
@@ -63,8 +62,8 @@ public class User extends AbstractEntity<Long> {
     private List<Address> addresses = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<GroupHasUser> groupHasUsers = new HashSet<>();
+    private List<GroupHasUser> groupHasUsers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<UserHasRole> userHasRoles = new HashSet<>();
+    private List<UserHasRole> userHasRoles = new ArrayList<>();
 }
