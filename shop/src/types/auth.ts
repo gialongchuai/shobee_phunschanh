@@ -1,5 +1,4 @@
-export interface AuthResponse {
-  access_token: string
-  refresh_token: string
-  userId: string
-}
+import type { ApiResponse } from "./api"
+import type { User } from "./user"
+
+export type AuthResponse = ApiResponse<User>;

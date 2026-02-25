@@ -1,7 +1,0 @@
-// type Role = 'User' | 'Admin'
-
-export interface Result {
-  access_token: string
-  refresh_token: string
-  userId: string
-}

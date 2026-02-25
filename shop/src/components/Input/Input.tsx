@@ -95,7 +95,7 @@ interface Props {
 
 export default function Input({
   type,
-  errorMessage,
+  errorMessage, 
   placeholder,
   className,
   name,

@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { login } from "../../apis/auth.api";
+import { loginAccount } from "../../apis/auth.api";
 import Input from "../../components/Input/Input";
 import { schema, type Schema } from "../../utils/rules";
 
@@ -21,7 +21,7 @@ export default function Login() {
   // const onSubmit = handleSubmit((data) => console.log(data));
 
   const loginMutation = useMutation({
-    mutationFn: login,
+    mutationFn: loginAccount,
   });
 
   const onSubmit = handleSubmit((data) => {

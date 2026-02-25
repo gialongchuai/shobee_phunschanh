@@ -47,6 +47,7 @@ alt + shift + f : format code
 ctrl + d: chọn nhiều từ giống nhau
 ctrl + r: tìm kiếm project code . recently
 shift + alt + o: Loại bỏ code không dùng
+alt + mũi tên L : quay lại page vừa ctrl + click
 
 ---
 
