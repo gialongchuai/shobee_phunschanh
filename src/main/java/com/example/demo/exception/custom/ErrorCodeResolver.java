@@ -1,5 +1,7 @@
 package com.example.demo.exception.custom;
 
+import com.example.demo.exception.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,27 +10,27 @@ public class ErrorCodeResolver {
 
     static {
         // Đăng ký tất cả các enum implements BaseErrorCode vào map (chat)
-//        for (SecurityErrorCode errorCode : SecurityErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
-//        for (ProductErrorCode errorCode : ProductErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
-//        for (UploadFileErrorCode errorCode : UploadFileErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
-//        for (UserErrorCode errorCode : UserErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
-//        for (CategoryErrorCode errorCode : CategoryErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
-//        for (OrderErrorCode errorCode : OrderErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
-//        for (OrderDetailErrorCode errorCode : OrderDetailErrorCode.values()) {
-//            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
-//        }
+        for (SecurityErrorCode errorCode : SecurityErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
+        for (ProductErrorCode errorCode : ProductErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
+        for (UploadFileErrorCode errorCode : UploadFileErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
+        for (UserErrorCode errorCode : UserErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
+        for (CategoryErrorCode errorCode : CategoryErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
+        for (OrderErrorCode errorCode : OrderErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
+        for (OrderDetailErrorCode errorCode : OrderDetailErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
     }
 
     public static BaseErrorCode resolve(String enumKey) {

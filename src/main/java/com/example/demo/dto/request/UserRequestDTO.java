@@ -29,6 +29,7 @@ public class UserRequestDTO {
     private String phone;
     private Date dateOfBirth;
 
+    @NotNull(message = "GENDER_IS_REQUIRED")
     private Gender gender;
 
     private String username;

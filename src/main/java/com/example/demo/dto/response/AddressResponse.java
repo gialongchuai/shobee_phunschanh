@@ -15,6 +15,6 @@ public class AddressResponse extends AbstractEntityResponse<Long> {
     private String street;
     private String city;
     private String country;
-    private Integer addressType;
+    private String addressType;
     private UserResponse userResponse;
 }

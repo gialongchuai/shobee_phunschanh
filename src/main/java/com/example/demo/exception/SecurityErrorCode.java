@@ -16,7 +16,8 @@ public enum SecurityErrorCode implements BaseErrorCode {
     UNAUTHENTICATED(9001, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(9002, "You don't have permission!", HttpStatus.FORBIDDEN),
     TOKEN_MISSING(9003, "Token must not be blank!", HttpStatus.UNAUTHORIZED),
-    TOKEN_INVALID(9004, "Token is invalid or expired!", HttpStatus.UNAUTHORIZED);
+    TOKEN_INVALID(9004, "Token is invalid or expired!", HttpStatus.UNAUTHORIZED),
+    INVALID_CREDENTIALS(9005, "Invalid username or password!", HttpStatus.UNAUTHORIZED);
 
     int code;
     String message;

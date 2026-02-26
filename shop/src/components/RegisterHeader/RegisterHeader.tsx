@@ -16,7 +16,7 @@ export default function RegisterHeader() {
                 </g>
               </svg>
             </Link>
-            <div className="ml-5 text-xl lg:text-2xl">Đăng Ký</div>
+            <div className="bg-purple-600 ml-5 text-xl lg:text-2xl">Đăng Ký | Đăng nhập</div>
           </nav>
         </div>
       </header>

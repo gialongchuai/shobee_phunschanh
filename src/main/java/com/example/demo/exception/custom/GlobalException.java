@@ -4,7 +4,10 @@ import com.example.demo.dto.response.ApiResponse;
 import com.example.demo.exception.SecurityErrorCode;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -111,6 +114,27 @@ public class GlobalException {
                                         : baseErrorCode.getMessage())
                         .build());
     }
+
+    // Handle bắt sai enum cho requestDTO, ví dụ: gender không phải MALE, FEMALE, OTHER mà là MALE1 thì sẽ bắt lỗi này
+    // ex: String origin = "JSON parse error: Cannot deserialize value of type `com.example.demo.util.UserType` from String \"users\": not one of the values accepted for Enum class: [owner, admin, user]";
+    // output: UserType is invalid!
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    ResponseEntity<ApiResponse> handlingHttpMessageNotReadableException(
+            HttpMessageNotReadableException httpMessageNotReadableException) {
+        final String messageOrigin = httpMessageNotReadableException.getMessage();
+
+        int start = messageOrigin.indexOf("`");
+        int end = messageOrigin.lastIndexOf("`");
+        String errorPackage = messageOrigin.substring(start + 1, end);
+
+        String errorClass = errorPackage.substring(errorPackage.lastIndexOf(".") + 1);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+                .body(ApiResponse.builder()
+                        .message(errorClass + " is invalid!")
+                        .build());
+    }
+
 
     private String mapAttribute(String message, Map<String, Object> attributes) {
         String minValue = String.valueOf(attributes.get(MIN_ATTRIBUTE));

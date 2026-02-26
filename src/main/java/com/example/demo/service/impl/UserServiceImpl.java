@@ -1,12 +1,10 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.configuration.Translator;
 import com.example.demo.dto.request.AddressRequestDTO;
 import com.example.demo.dto.request.UserRequestDTO;
 import com.example.demo.dto.response.*;
 import com.example.demo.exception.UserErrorCode;
 import com.example.demo.exception.custom.AppException;
-import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.mapper.AddressMapper;
 import com.example.demo.mapper.RoleMapper;
 import com.example.demo.mapper.UserMapper;
@@ -20,6 +18,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.custom.SearchRepository;
 import com.example.demo.repository.custom.specification.UserSpecificationBuilder;
 import com.example.demo.service.UserService;
+import com.example.demo.util.Gender;
 import com.example.demo.util.RoleType;
 import com.example.demo.util.UserStatus;
 import lombok.AccessLevel;
@@ -65,6 +64,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsername(requestDTO.getUsername())) {
             throw new AppException(UserErrorCode.USER_EXISTED);
         }
+
+//        if(requestDTO.getGender() != null) {
+//            if(requestDTO.getGender() != Gender.FEMALE && requestDTO.getGender() != Gender.MALE && requestDTO.getGender() != Gender.OTHER) {
+//                throw new AppException(UserErrorCode.GENDER_USER_INVALID);
+//            }
+//        }
 
         User user = UserMapper.toUser(requestDTO);
         user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));

@@ -14,3 +14,12 @@ export function isAxiosBadRequestError<T>(
     error.response?.status === HttpStatusCode.BadRequest
   );
 }
+
+export function isAxiosUnauthorizedError<T>(
+  error: unknown,
+): error is AxiosError<T> {
+  return (
+    isAxiosError<T>(error) &&
+    error.response?.status === HttpStatusCode.Unauthorized
+  );
+}

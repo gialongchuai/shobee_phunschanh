@@ -1,4 +1,4 @@
 import type { ApiResponse } from "./api"
-import type { User } from "./user"
+import type { UserResponse } from "./user"
 
-export type AuthResponse = ApiResponse<User>;
+export type AuthResponse = ApiResponse<UserResponse>;

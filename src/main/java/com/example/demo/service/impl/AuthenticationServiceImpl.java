@@ -80,7 +80,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .userId(user.getId())
                     .build();
         } catch (AuthenticationException e) {
-            throw new AppException(SecurityErrorCode.UNAUTHENTICATED);
+            throw new AppException(SecurityErrorCode.INVALID_CREDENTIALS);
         }
     }
 

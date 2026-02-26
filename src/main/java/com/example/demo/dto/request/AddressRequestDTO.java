@@ -25,6 +25,6 @@ public class AddressRequestDTO {
 
     private String country;
 
-    private Integer addressType; // gán kiểu wrapper ko truyền là null kẻo int = 0
+    private String addressType; // gán kiểu wrapper ko truyền là null kẻo int = 0
 
 }

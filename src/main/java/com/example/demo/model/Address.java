@@ -32,7 +32,7 @@ public class Address extends AbstractEntity<Long> {
     private String country;
 
     @Column(name = "address_type")
-    private Integer addressType;
+    private String addressType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
