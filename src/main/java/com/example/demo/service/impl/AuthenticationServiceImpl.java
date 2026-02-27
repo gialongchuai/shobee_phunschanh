@@ -78,6 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .accessToken(accessToken)
                     .refreshToken(refreshToken)
                     .userId(user.getId())
+                    .username(user.getUsername())
                     .build();
         } catch (AuthenticationException e) {
             throw new AppException(SecurityErrorCode.INVALID_CREDENTIALS);

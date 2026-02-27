@@ -13,6 +13,8 @@ import {
 import type { ApiResponse } from "../../types/api";
 import { AppContext } from "../../contexts/app.context";
 import Button from "../../components/Button";
+import type { AuthResponse } from "../../types/auth";
+import path from "../../constants/path";
 
 type FormData = Pick<Schema, "username" | "password">;
 const loginSchema = schema.pick(["username", "password"]);
@@ -26,7 +28,7 @@ export default function Login() {
     resolver: yupResolver(loginSchema),
   });
 
-  const { setIsAuthenticated } = useContext(AppContext);
+  const { setIsAuthenticated, setProfile } = useContext(AppContext);
   const navigate = useNavigate();
 
   // const onSubmit = handleSubmit((data) => console.log(data));
@@ -40,6 +42,7 @@ export default function Login() {
       onSuccess: (data) => {
         console.log(data);
         setIsAuthenticated(true);
+        setProfile((data.data as AuthResponse).result.username);
         alert("Đăng nhập thành công!");
         navigate("/");
       },
@@ -171,8 +174,8 @@ export default function Login() {
 
               <div className="mt-3">
                 <Button
-                  type='submit'
-                  className='flex  w-full items-center justify-center bg-purple-300 py-4 px-2 text-sm uppercase text-white hover:bg-purple-400'
+                  type="submit"
+                  className="flex  w-full items-center justify-center bg-purple-300 py-4 px-2 text-sm uppercase text-white hover:bg-purple-400"
                   isLoading={loginMutation.isPending}
                   disabled={loginMutation.isPending}
                 >
@@ -183,7 +186,7 @@ export default function Login() {
                 <span className="text-gray-500">Bạn chưa đã có tài khoản?</span>
                 <Link
                   className="ml-2 text-red-500 font-semibold hover:underline"
-                  to="/register"
+                  to={path.register}
                 >
                   Đăng ký tại đây
                 </Link>

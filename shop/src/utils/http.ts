@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance } from "axios";
 import type { AuthResponse } from "../types/auth";
-import { getAccessTokenFromLS, getRefreshTokenFromLS, setAccessTokenToLS, setRefreshTokenToLS } from "./auth";
+import { getAccessTokenFromLS, getRefreshTokenFromLS, setAccessTokenToLS, setProfileToLS, setRefreshTokenToLS } from "./auth";
 
 class Http {
   instance: AxiosInstance;
@@ -46,11 +46,13 @@ class Http {
         this.refreshToken = result.refreshToken;
         setAccessTokenToLS(this.accessToken);
         setRefreshTokenToLS(this.refreshToken);
+        setProfileToLS(result.username);
       } else if (url === "/auth/logout" && response.status === 200) {
         this.accessToken = null;
         this.refreshToken = null;
         setAccessTokenToLS("");
         setRefreshTokenToLS("");
+        setProfileToLS("");
       }
 
       return response;

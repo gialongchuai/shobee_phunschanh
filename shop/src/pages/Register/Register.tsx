@@ -14,6 +14,7 @@ import {
   isAxiosUnauthorizedError,
 } from "../../utils/utils";
 import Button from "../../components/Button";
+import path from "../../constants/path";
 
 // Lấy tất cả các trường cần thiết cho đăng ký (Flat structure - không phải mảng)
 type FormData = Schema;
@@ -38,7 +39,7 @@ export default function Register() {
     onSuccess: (data) => {
       console.log("Đăng ký thành công:", data);
       alert("Đăng ký thành công!");
-      navigate("/login"); // Chuyển hướng sang trang login hoặc home
+      navigate(path.login); // Chuyển hướng sang trang login
     },
     onError: (error: any) => {
       let msg = "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại.";
@@ -372,7 +373,7 @@ export default function Register() {
                 <span className="text-gray-500">Bạn đã có tài khoản?</span>
                 <Link
                   className="ml-2 text-red-500 font-semibold hover:underline"
-                  to="/login"
+                  to={path.login}
                 >
                   Đăng nhập tại đây
                 </Link>
