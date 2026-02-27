@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUser } from "../../apis/auth.api";
 import Input from "../../components/Input/Input";
 import type { ApiResponse } from "../../types/api";
@@ -13,6 +13,7 @@ import {
 } from "../../utils/utils";
 import type { UserRequest } from "../../types/user";
 import { transformRegisterFormData } from "../../utils/formTransfrom";
+import { nav } from "framer-motion/client";
 
 // Lấy tất cả các trường cần thiết cho đăng ký (Flat structure - không phải mảng)
 type FormData = Schema;
@@ -26,6 +27,7 @@ export default function Register() {
     // nhờ yup truyền vào yupResolver để tự động sinh rules và validate
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
 
   // const rules = getRules();
 
@@ -36,8 +38,7 @@ export default function Register() {
     onSuccess: (data) => {
       console.log("Đăng ký thành công:", data);
       alert("Đăng ký thành công!");
-      // http://localhost:3000/login
-      // window.location.href = "/login"; // Chuyển hướng sang trang login hoặc home
+      navigate("/login"); // Chuyển hướng sang trang login hoặc home
     },
     onError: (error: any) => {
       let msg = "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại.";

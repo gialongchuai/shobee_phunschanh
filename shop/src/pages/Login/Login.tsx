@@ -1,16 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginAccount } from "../../apis/auth.api";
 import Input from "../../components/Input/Input";
 import { schema, type Schema } from "../../utils/rules";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   isAxiosBadRequestError,
   isAxiosUnauthorizedError,
 } from "../../utils/utils";
 import type { ApiResponse } from "../../types/api";
+import { AppContext } from "../../contexts/app.context";
 
 type FormData = Pick<Schema, "username" | "password">;
 const loginSchema = schema.pick(["username", "password"]);
@@ -24,6 +25,9 @@ export default function Login() {
     resolver: yupResolver(loginSchema),
   });
 
+  const { setIsAuthenticated } = useContext(AppContext);
+  const navigate = useNavigate();
+
   // const onSubmit = handleSubmit((data) => console.log(data));
 
   const loginMutation = useMutation({
@@ -34,12 +38,17 @@ export default function Login() {
     loginMutation.mutate(data, {
       onSuccess: (data) => {
         console.log(data);
-      alert("Đăng nhập thành công!");
+        setIsAuthenticated(true);
+        alert("Đăng nhập thành công!");
+        navigate("/");
       },
       onError: (error: any) => {
         let msg = "Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại.";
         console.log(error);
-        if (isAxiosBadRequestError<ApiResponse<FormData>>(error) || isAxiosUnauthorizedError<ApiResponse<FormData>>(error)) {
+        if (
+          isAxiosBadRequestError<ApiResponse<FormData>>(error) ||
+          isAxiosUnauthorizedError<ApiResponse<FormData>>(error)
+        ) {
           const data = error.response?.data;
 
           // Ưu tiên lấy message từ server

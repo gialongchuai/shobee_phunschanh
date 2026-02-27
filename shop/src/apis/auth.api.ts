@@ -6,3 +6,5 @@ export const loginAccount = (body: LoginRequest) =>
   http.post<AuthResponse>("/auth/access", body);
 
 export const createUser = (body: UserRequest) => http.post<AuthResponse>("/user/", body);
+
+export const logoutAccount = () => http.post("/auth/logout");

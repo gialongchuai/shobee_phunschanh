@@ -18,6 +18,10 @@ nói chung là chỉnh nhiều lắm có gì vào package json xem lại nhé
 thăng tailwindcss thì css cho nó dễ nhưng trong mấy cái tsx
 muốn nhận nó đôi khi bị lỗi không nhận thêm cái @tailwindcss line clapm gì đó :vv
 
+yarn add @floating-ui/react-dom-interactions
+yarn add framer-motion
+2 cái này để lastest cho nó phù hợp với react 19
+
 --- Frontend
 
 Thằng yup nó validate mấy cía form bên rule

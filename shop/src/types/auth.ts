@@ -1,4 +1,7 @@
-import type { ApiResponse } from "./api"
-import type { UserResponse } from "./user"
+import type { ApiResponse } from "./api";
 
-export type AuthResponse = ApiResponse<UserResponse>;
+export type AuthResponse = ApiResponse<{    
+    accessToken: string
+    refreshToken: string
+    userId: number
+}>;
