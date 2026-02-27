@@ -12,6 +12,7 @@ import {
 } from "../../utils/utils";
 import type { ApiResponse } from "../../types/api";
 import { AppContext } from "../../contexts/app.context";
+import Button from "../../components/Button";
 
 type FormData = Pick<Schema, "username" | "password">;
 const loginSchema = schema.pick(["username", "password"]);
@@ -169,12 +170,14 @@ export default function Login() {
               />
 
               <div className="mt-3">
-                <button
-                  type="submit"
-                  className="flex  w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600"
+                <Button
+                  type='submit'
+                  className='flex  w-full items-center justify-center bg-purple-300 py-4 px-2 text-sm uppercase text-white hover:bg-purple-400'
+                  isLoading={loginMutation.isPending}
+                  disabled={loginMutation.isPending}
                 >
                   Đăng nhập
-                </button>
+                </Button>
               </div>
               <div className="mt-3 flex items-center justify-center text-sm">
                 <span className="text-gray-500">Bạn chưa đã có tài khoản?</span>

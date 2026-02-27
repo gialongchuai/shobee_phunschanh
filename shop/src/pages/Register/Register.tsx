@@ -6,14 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUser } from "../../apis/auth.api";
 import Input from "../../components/Input/Input";
 import type { ApiResponse } from "../../types/api";
+import type { UserRequest } from "../../types/user";
+import { transformRegisterFormData } from "../../utils/formTransfrom";
 import { schema, type Schema } from "../../utils/rules";
 import {
   isAxiosBadRequestError,
   isAxiosUnauthorizedError,
 } from "../../utils/utils";
-import type { UserRequest } from "../../types/user";
-import { transformRegisterFormData } from "../../utils/formTransfrom";
-import { nav } from "framer-motion/client";
+import Button from "../../components/Button";
 
 // Lấy tất cả các trường cần thiết cho đăng ký (Flat structure - không phải mảng)
 type FormData = Schema;
@@ -359,12 +359,13 @@ export default function Register() {
 
               {/* Nút Submit */}
               <div className="mt-8">
-                <button
-                  type="submit"
-                  className="w-full bg-red-500 text-white py-4 px-4 text-uppercase font-semibold hover:bg-red-600 transition-colors rounded-sm"
+                <Button
+                  className='flex w-full items-center justify-center bg-purple-300 py-4 px-2 text-sm uppercase text-white hover:bg-purple-400'
+                  isLoading={registerMutation.isPending}
+                  disabled={registerMutation.isPending}
                 >
-                  ĐĂNG KÝ NGAY
-                </button>
+                  Đăng ký
+                </Button>
               </div>
 
               <div className="mt-6 flex items-center justify-center text-sm">
