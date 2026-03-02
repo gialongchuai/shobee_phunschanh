@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "tbl_token")
 @Entity(name = "Token")
-public class Token extends AbstractEntity<Long> {
+public class Token extends AbstractEntity<String> {
 
     @Column(name = "username", unique = true)
     private String username;

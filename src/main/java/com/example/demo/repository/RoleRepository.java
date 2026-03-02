@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, String> {
 
     @Query(value = "select r from Role r inner join UserHasRole uhr on r.id = uhr.role.id where uhr.user.id = :userId")
-    List<Role> getAllByUserId(Long userId);
+    List<Role> getAllByUserId(String userId);
 
 //    Optional<Role> findByType(String roleType);
 
     Optional<Role> findByName(String roleType);
+
+    Boolean existsByName(String roleName);
 }

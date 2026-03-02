@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "tbl_permission")
 @Entity(name = "Permission")
-public class Permission extends AbstractEntity<Integer> {
+public class Permission extends AbstractEntity<String> {
 
     @Column(name = "name")
     private String name;

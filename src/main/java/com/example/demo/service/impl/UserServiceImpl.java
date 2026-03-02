@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.request.AddressRequestDTO;
-import com.example.demo.dto.request.UserRequestDTO;
+import com.example.demo.dto.request.AddressCreationRequest;
+import com.example.demo.dto.request.UserCreationRequest;
 import com.example.demo.dto.response.*;
 import com.example.demo.exception.UserErrorCode;
 import com.example.demo.exception.custom.AppException;
@@ -18,7 +18,6 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.custom.SearchRepository;
 import com.example.demo.repository.custom.specification.UserSpecificationBuilder;
 import com.example.demo.service.UserService;
-import com.example.demo.util.Gender;
 import com.example.demo.util.RoleType;
 import com.example.demo.util.UserStatus;
 import lombok.AccessLevel;
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserResponse saveUser(UserRequestDTO requestDTO) {
+    public UserResponse saveUser(UserCreationRequest requestDTO) {
         List<AddressResponse> addressResponses = new ArrayList<>();
         Set<GroupHasUserResponse> groupHasUserResponses = new HashSet<>();
         Set<UserHasRoleResponse> userHasRoleResponses = new HashSet<>();
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService {
         if (userRes.getId() != null) {
             userResponse = UserMapper.toUserResponse(userRes);
             List<Address> addresses = new ArrayList<>();
-            for (AddressRequestDTO addressRequestDTO : requestDTO.getAddresses()) {
+            for (AddressCreationRequest addressRequestDTO : requestDTO.getAddresses()) {
                 Address address = AddressMapper.toAddress(addressRequestDTO);
 
                 address.setUser(userRes);
@@ -140,7 +139,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUser(Long userId, UserRequestDTO requestDTO) {
+    public void updateUser(String userId, UserCreationRequest requestDTO) {
         User user = getUserById(userId);
         UserMapper.updateUser(user, requestDTO);
         user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
@@ -174,7 +173,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeStatusUser(Long userId, UserStatus userStatus) {
+    public void changeStatusUser(String userId, UserStatus userStatus) {
         User user = getUserById(userId);
         user.setStatus(userStatus);
         userRepository.save(user);
@@ -182,7 +181,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
+    public void deleteUser(String userId) {
         // xóa mềm
 //        userRepository.deleteById(userId);
 
@@ -194,7 +193,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUser(Long userId) {
+    public UserResponse getUser(String userId) {
         User user = getUserById(userId);
         UserResponse userResponse = UserResponse.builder()
                 .firstName(user.getFirstName())
@@ -390,7 +389,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private User getUserById(Long userId) {
+    private User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(() -> new AppException(UserErrorCode.USER_NOT_EXISTED));
     }
 }

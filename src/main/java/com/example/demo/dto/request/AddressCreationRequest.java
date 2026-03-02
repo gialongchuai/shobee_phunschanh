@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressRequestDTO {
+public class AddressCreationRequest {
 
     private String apartmentNumber;
 

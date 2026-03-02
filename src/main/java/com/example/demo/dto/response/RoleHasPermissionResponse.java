@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleHasPermissionResponse extends AbstractEntityResponse<Integer> {
+public class RoleHasPermissionResponse extends AbstractEntityResponse<String> {
 
     private RoleResponse roleResponse;
 

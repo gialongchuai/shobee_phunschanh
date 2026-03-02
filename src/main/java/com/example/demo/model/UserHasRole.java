@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "tbl_user_has_role")
 @Entity(name = "UserHasRole")
-public class UserHasRole extends AbstractEntity<Long> {
+public class UserHasRole extends AbstractEntity<String> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")

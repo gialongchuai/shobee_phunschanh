@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.request.UserRequestDTO;
+import com.example.demo.dto.request.UserCreationRequest;
 import com.example.demo.dto.response.RoleResponse;
 import com.example.demo.dto.response.UserHasRoleResponse;
 import com.example.demo.dto.response.UserResponse;
@@ -26,17 +26,17 @@ public class UserMapper {
         return userResponse;
     }
 
-    public static User toUser(UserRequestDTO userRequestDTO) {
+    public static User toUser(UserCreationRequest userCreationRequestDTO) {
         User user = User.builder()
-                .firstName(userRequestDTO.getFirstName())
-                .lastName(userRequestDTO.getLastName())
-                .dateOfBirth(userRequestDTO.getDateOfBirth())
-                .gender(userRequestDTO.getGender())
-                .phone(userRequestDTO.getPhone())
-                .email(userRequestDTO.getEmail())
-                .username(userRequestDTO.getUsername())
-                .status(userRequestDTO.getStatus())
-                .type(userRequestDTO.getType())
+                .firstName(userCreationRequestDTO.getFirstName())
+                .lastName(userCreationRequestDTO.getLastName())
+                .dateOfBirth(userCreationRequestDTO.getDateOfBirth())
+                .gender(userCreationRequestDTO.getGender())
+                .phone(userCreationRequestDTO.getPhone())
+                .email(userCreationRequestDTO.getEmail())
+                .username(userCreationRequestDTO.getUsername())
+                .status(userCreationRequestDTO.getStatus())
+                .type(userCreationRequestDTO.getType())
                 .build();
 
         return user;
@@ -52,15 +52,15 @@ public class UserMapper {
         return userHasRoleResponse;
     }
 
-    public static void updateUser(User user, UserRequestDTO userRequestDTO) {
-        user.setFirstName(userRequestDTO.getFirstName());
-        user.setLastName(userRequestDTO.getLastName());
-        user.setDateOfBirth(userRequestDTO.getDateOfBirth());
-        user.setGender(userRequestDTO.getGender());
-        user.setPhone(userRequestDTO.getPhone());
-        user.setEmail(userRequestDTO.getEmail());
-        user.setUsername(userRequestDTO.getUsername());
-        user.setStatus(userRequestDTO.getStatus());
-        user.setType(userRequestDTO.getType());
+    public static void updateUser(User user, UserCreationRequest userCreationRequestDTO) {
+        user.setFirstName(userCreationRequestDTO.getFirstName());
+        user.setLastName(userCreationRequestDTO.getLastName());
+        user.setDateOfBirth(userCreationRequestDTO.getDateOfBirth());
+        user.setGender(userCreationRequestDTO.getGender());
+        user.setPhone(userCreationRequestDTO.getPhone());
+        user.setEmail(userCreationRequestDTO.getEmail());
+        user.setUsername(userCreationRequestDTO.getUsername());
+        user.setStatus(userCreationRequestDTO.getStatus());
+        user.setType(userCreationRequestDTO.getType());
     }
 }

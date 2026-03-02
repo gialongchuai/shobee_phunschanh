@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.configuration.Translator;
-import com.example.demo.dto.request.EmailForgotPasswordDTO;
-import com.example.demo.dto.request.ResetPasswordRequestDTO;
-import com.example.demo.dto.request.SignInRequestDTO;
-import com.example.demo.dto.request.TokenResetPasswordDTO;
+import com.example.demo.dto.request.EmailForgotPasswordRequest;
+import com.example.demo.dto.request.ResetPasswordRequest;
+import com.example.demo.dto.request.SignInRequest;
+import com.example.demo.dto.request.TokenResetPassword;
 import com.example.demo.dto.response.ApiResponse;
 import com.example.demo.dto.response.TokenResponse;
 import com.example.demo.service.impl.AuthenticationServiceImpl;
@@ -38,7 +38,7 @@ public class AuthenticationController {
     // chứ không được dùng REFRESH
     @Operation(summary = "user login", description = "API login user!")
     @PostMapping("/access")
-    public ApiResponse<TokenResponse> login(@RequestBody SignInRequestDTO signInRequest, HttpServletRequest httpRequest) {
+    public ApiResponse<TokenResponse> login(@RequestBody SignInRequest signInRequest, HttpServletRequest httpRequest) {
         log.info("Trying login user ...");
 
         return new ApiResponse<>(HttpStatus.OK.value(), Translator.toLocale("auth.login.authenticated"), authenticationService.authenticate(signInRequest));
@@ -101,7 +101,7 @@ public class AuthenticationController {
     // token thuộc type tokenReset có hạn trong 1 tiếng
     @Operation(summary = "user forgot password", description = "API for user when they forgot password!")
     @PostMapping("/forgot-password")
-    public ApiResponse<String> forgotPassword(@RequestBody EmailForgotPasswordDTO request) {
+    public ApiResponse<String> forgotPassword(@RequestBody EmailForgotPasswordRequest request) {
         log.info("Trying to access when user forgot password ...");
         return new ApiResponse<>(HttpStatus.OK.value(), Translator.toLocale("auth.password.change.info.sent.success"), authenticationService.forgotPassword(request));
 
@@ -117,7 +117,7 @@ public class AuthenticationController {
     // sau đó nếu validate đúng hết tự động nhảy đến form điền newPass và confirmNewPass bên dưới
     @Operation(summary = "user reset password", description = "API for user reset password!")
     @PostMapping("/reset-password")
-    public ApiResponse<String> resetPassword(@RequestBody TokenResetPasswordDTO tokenResetPassword) {
+    public ApiResponse<String> resetPassword(@RequestBody TokenResetPassword tokenResetPassword) {
         log.info("Trying to access when user reset password ...");
         return new ApiResponse<>(HttpStatus.OK.value(), Translator.toLocale("auth.password.change.info.sent.success"), authenticationService.resetPassword(tokenResetPassword));
 
@@ -132,7 +132,7 @@ public class AuthenticationController {
     // validate 2 cái pass gửi, còn token được gửi kèm khi người dùng bấm vào nút change password của mình.
     @Operation(summary = "user change password", description = "API for user change password!")
 //    @PostMapping("/change-password")
-    public ApiResponse<String> changePassword(@RequestBody ResetPasswordRequestDTO request) {
+    public ApiResponse<String> changePassword(@RequestBody ResetPasswordRequest request) {
         log.info("Trying to access when user change password (finish step) ...");
         return new ApiResponse<>(HttpStatus.OK.value(), Translator.toLocale("auth.password.change.success"), authenticationService.changePassword(request));
 

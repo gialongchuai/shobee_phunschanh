@@ -8,13 +8,13 @@ import java.util.Set;
 public interface JwtService {
     // Sử dụng đúng cái UserDetail của hệ thống
     // đã được impl
-    String generateAccessToken(Long userId, String username, Set<String> authorities);
+    String generateAccessToken(String userId, String username, Set<String> authorities);
 
-    String generateRefreshToken(Long userId, String username, Set<String> authorities);
+    String generateRefreshToken(String userId, String username, Set<String> authorities);
 
     String extractUsername(String token, TokenType type);
 
     boolean isValid(String token, TokenType tokenType, UserDetails userDetails);
 
-    String generateResetToken(Long userId, String username, Set<String> authorities);
+    String generateResetToken(String userId, String username, Set<String> authorities);
 }

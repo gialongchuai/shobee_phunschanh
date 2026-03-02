@@ -12,7 +12,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse extends AbstractEntityResponse<Long> {
+public class UserResponse extends AbstractEntityResponse<String> {
     private String firstName;
 
     private String lastName;

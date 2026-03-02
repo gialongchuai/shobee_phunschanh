@@ -3,6 +3,6 @@ package com.example.demo.dto.request;
 import lombok.Getter;
 
 @Getter
-public class TokenResetPasswordDTO {
-    private String token;
+public class EmailForgotPasswordRequest {
+    private String email;
 }

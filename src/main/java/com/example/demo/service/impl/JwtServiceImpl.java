@@ -38,7 +38,7 @@ public class JwtServiceImpl implements JwtService {
     private String resetKey;
 
     @Override
-    public String generateAccessToken(Long userId, String username, Set<String> authorities) {
+    public String generateAccessToken(String userId, String username, Set<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("role", authorities);
@@ -46,7 +46,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateRefreshToken(Long userId, String username, Set<String> authorities) {
+    public String generateRefreshToken(String userId, String username, Set<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("role", authorities);
@@ -54,7 +54,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateResetToken(Long userId, String username, Set<String> authorities) {
+    public String generateResetToken(String userId, String username, Set<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("role", authorities);

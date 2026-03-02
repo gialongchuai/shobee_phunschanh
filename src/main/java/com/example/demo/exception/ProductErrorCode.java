@@ -19,7 +19,8 @@ public enum ProductErrorCode implements BaseErrorCode {
     THUMBNAIL_IS_REQUIRED(3005, "Thumbnail is required!", HttpStatus.BAD_REQUEST),
     IMAGE_IS_REQUIRED(3006, "Image is required!", HttpStatus.BAD_REQUEST),
     PRICE_IS_REQUIRED(3007, "Price is required!", HttpStatus.BAD_REQUEST),
-    PRICE_INVALID(3008, "Price must be greater than or equal to 0!", HttpStatus.BAD_REQUEST);
+    PRICE_INVALID(3008, "Price must be greater than or equal to 0!", HttpStatus.BAD_REQUEST),
+    IMAGE_OR_THUMBNAIL_INVALID(3009, "Image or thumbnail must be a valid URL!", HttpStatus.BAD_REQUEST);
 
     int code;
     String message;

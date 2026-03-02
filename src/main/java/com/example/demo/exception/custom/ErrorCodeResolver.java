@@ -31,6 +31,9 @@ public class ErrorCodeResolver {
         for (OrderDetailErrorCode errorCode : OrderDetailErrorCode.values()) {
             ERROR_CODE_MAP.put(errorCode.name(), errorCode);
         }
+        for (RoleErrorCode errorCode : RoleErrorCode.values()) {
+            ERROR_CODE_MAP.put(errorCode.name(), errorCode);
+        }
     }
 
     public static BaseErrorCode resolve(String enumKey) {

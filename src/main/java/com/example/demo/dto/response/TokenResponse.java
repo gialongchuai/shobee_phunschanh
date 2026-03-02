@@ -16,6 +16,6 @@ public class TokenResponse {
     // mà vẫn duy trì cái token
     private String refreshToken;
 
-    private Long userId;
+    private String userId;
     private String username;
 }

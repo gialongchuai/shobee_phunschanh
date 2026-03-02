@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "tbl_user_has_group")
 @Entity(name = "GroupHasUser")
-public class GroupHasUser extends AbstractEntity<Long> {
+public class GroupHasUser extends AbstractEntity<String> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

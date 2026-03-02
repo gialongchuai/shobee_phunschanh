@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "tbl_group")
 @Entity(name = "Group")
-public class Group extends AbstractEntity<Integer> {
+public class Group extends AbstractEntity<String> {
 
     @Column(name = "name")
     private String name;

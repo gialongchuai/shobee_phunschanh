@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressResponse extends AbstractEntityResponse<Long> {
+public class AddressResponse extends AbstractEntityResponse<String> {
     private String apartmentNumber;
     private String floor;
     private String building;

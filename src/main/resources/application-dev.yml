@@ -1,6 +1,16 @@
 server:
   port: 8080
+  tomcat:
+    max-part-count: 50          # Fix lỗi FileCountLimitExceededException (default Tomcat 10=10 parts)
+    # max-part-header-size: 512   # Optional: nếu cần giới hạn header mỗi part (default 512 bytes ở Tomcat mới)
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB       # Max size mỗi file (thumbnail/images)
+      max-request-size: 50MB    # Max tổng request (tất cả files + text fields)
+      file-size-threshold: 2MB  # Khi file > 2MB thì write ra disk thay vì giữ trong memory
+      enabled: true             # Bật multipart (mặc định true, nhưng set cho rõ)
+
   config:
     activate:
       on-profile: dev

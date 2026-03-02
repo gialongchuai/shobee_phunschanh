@@ -17,7 +17,7 @@ import java.util.*;
 @NoArgsConstructor
 @Table(name = "tbl_user")
 @Entity(name = "User")
-public class User extends AbstractEntity<Long> {
+public class User extends AbstractEntity<String> {
 
     @Column(name = "first_name")
     private String firstName;

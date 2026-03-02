@@ -10,7 +10,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PermissionResponse extends AbstractEntityResponse<Integer> {
+public class PermissionResponse extends AbstractEntityResponse<String> {
 
     private String name;
 

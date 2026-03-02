@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
-    private final Long id;
+    private final String id;
     private final String username;
     private final String password;
     private final UserStatus userStatus;
@@ -25,7 +25,7 @@ public class CustomUserDetails implements UserDetails {
                 .toList();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

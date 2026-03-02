@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "tbl_role_has_permission")
 @Entity(name = "RoleHasPermission")
-public class RoleHasPermission extends AbstractEntity<Integer> {
+public class RoleHasPermission extends AbstractEntity<String> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")

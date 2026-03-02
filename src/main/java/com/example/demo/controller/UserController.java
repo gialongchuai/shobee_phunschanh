@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.configuration.Translator;
-import com.example.demo.dto.request.UserRequestDTO;
+import com.example.demo.dto.request.UserCreationRequest;
 import com.example.demo.dto.response.ApiResponse;
 import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.UserResponse;
-import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.service.UserService;
 import com.example.demo.util.UserStatus;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +32,7 @@ public class UserController {
 
     @Operation(summary = "Add user", description = "API create a user!")
     @PostMapping("/")
-    public ApiResponse<UserResponse> addUser(@Valid @RequestBody UserRequestDTO requestDTO) {
+    public ApiResponse<UserResponse> addUser(@Valid @RequestBody UserCreationRequest requestDTO) {
         log.info("Dang add user voi username: " + requestDTO.getUsername() + "...");
         return new ApiResponse<>(HttpStatus.CREATED.value(), Translator.toLocale("user.add.success"), userService.saveUser(requestDTO));
 
@@ -49,7 +48,7 @@ public class UserController {
 
     @Operation(summary = "Update user", description = "API update a user!")
     @PutMapping("/{userId}")
-    public ApiResponse<?> updateUser(@PathVariable Long userId, @RequestBody UserRequestDTO requestDTO) {
+    public ApiResponse<?> updateUser(@PathVariable String userId, @RequestBody UserCreationRequest requestDTO) {
         log.info("Dang update userID: " + userId);
         userService.updateUser(userId, requestDTO);
         return new ApiResponse<>(HttpStatus.ACCEPTED.value(), Translator.toLocale("user.update.success"), null);
@@ -67,7 +66,7 @@ public class UserController {
 
     @Operation(summary = "Update status user", description = "API update status a user!")
     @PatchMapping("/{userId}")
-    public ApiResponse<?> changeUserStatus(@PathVariable Long userId, @RequestParam UserStatus status) {
+    public ApiResponse<?> changeUserStatus(@PathVariable String userId, @RequestParam UserStatus status) {
         log.info("Dang change status cho user: " + userId);
         userService.changeStatusUser(userId, status);
         return new ApiResponse<>(HttpStatus.ACCEPTED.value(), Translator.toLocale("user.update.success"), null);
@@ -83,7 +82,7 @@ public class UserController {
 
     @Operation(summary = "Delete a user", description = "API delete a user!")
     @DeleteMapping("/{userId}")
-    public ApiResponse<?> deleteUser(@PathVariable Long userId) {
+    public ApiResponse<?> deleteUser(@PathVariable String userId) {
         log.info("Dang xoa user: " + userId);
         userService.deleteUser(userId);
         return new ApiResponse<>(HttpStatus.NO_CONTENT.value(), Translator.toLocale("user.delete.success"), null);
@@ -100,7 +99,7 @@ public class UserController {
     @Operation(summary = "Get information a user", description = "API get a user!")
     @GetMapping("/{userId}")
 //    @PreAuthorize("hasAuthority('admin')")
-    public ApiResponse<UserResponse> getUser(@PathVariable @Min(1) @Valid Long userId) { // new UserRequestDTO("Tay", "Java", "abc@gmail.com", "0321123123")
+    public ApiResponse<UserResponse> getUser(@PathVariable @Min(1) @Valid String userId) { // new UserRequestDTO("Tay", "Java", "abc@gmail.com", "0321123123")
         log.info("Dang get user: " + userId);
         return new ApiResponse<>(HttpStatus.OK.value(), Translator.toLocale("user.get.success"), userService.getUser(userId));
 

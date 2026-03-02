@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public record TokenService(TokenRepository tokenRepository) {
-    public Long save(Token token) {
+    public String save(Token token) {
         Optional<Token> optionalToken = tokenRepository.findByUsername(token.getUsername());
         if (optionalToken.isEmpty()) { // nếu chưa có token thì lưu mới
             tokenRepository.save(token);

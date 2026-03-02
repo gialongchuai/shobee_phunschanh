@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Table(name = "tbl_address")
 @Entity(name = "Address")
-public class Address extends AbstractEntity<Long> {
+public class Address extends AbstractEntity<String> {
 
     @Column(name = "apartment_number")
     private String apartmentNumber;

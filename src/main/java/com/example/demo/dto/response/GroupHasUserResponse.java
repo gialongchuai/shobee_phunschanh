@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupHasUserResponse extends AbstractEntityResponse<Long> {
+public class GroupHasUserResponse extends AbstractEntityResponse<String> {
 
     private UserResponse userResponse;
 

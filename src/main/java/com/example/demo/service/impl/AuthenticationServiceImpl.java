@@ -1,14 +1,13 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.request.EmailForgotPasswordDTO;
-import com.example.demo.dto.request.ResetPasswordRequestDTO;
-import com.example.demo.dto.request.SignInRequestDTO;
-import com.example.demo.dto.request.TokenResetPasswordDTO;
+import com.example.demo.dto.request.EmailForgotPasswordRequest;
+import com.example.demo.dto.request.ResetPasswordRequest;
+import com.example.demo.dto.request.SignInRequest;
+import com.example.demo.dto.request.TokenResetPassword;
 import com.example.demo.dto.response.TokenResponse;
 import com.example.demo.exception.SecurityErrorCode;
 import com.example.demo.exception.UserErrorCode;
 import com.example.demo.exception.custom.AppException;
-import com.example.demo.exception.custom.ResourceNotFoundException;
 import com.example.demo.model.CustomUserDetails;
 import com.example.demo.model.Token;
 import com.example.demo.model.User;
@@ -46,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public TokenResponse authenticate(SignInRequestDTO signInRequest) {
+    public TokenResponse authenticate(SignInRequest signInRequest) {
 
         try {
             Set<String> authorities = new HashSet<>();
@@ -62,10 +61,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //            SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Token access
-            String accessToken = jwtService.generateAccessToken(user.getId(), user.getUsername(), authorities);
+            String accessToken = jwtService.generateAccessToken(user.getId().toString(), user.getUsername(), authorities);
 
             // Token refresh
-            String refreshToken = jwtService.generateRefreshToken(user.getId(), user.getUsername(), authorities);
+            String refreshToken = jwtService.generateRefreshToken(user.getId().toString(), user.getUsername(), authorities);
 
             // save token to db
             tokenService.save(Token.builder()
@@ -77,7 +76,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return TokenResponse.builder()
                     .accessToken(accessToken)
                     .refreshToken(refreshToken)
-                    .userId(user.getId())
+                    .userId(user.getId().toString())
                     .username(user.getUsername())
                     .build();
         } catch (AuthenticationException e) {
@@ -140,7 +139,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     // ======================= FORGOT PASSWORD =======================
     @Override
-    public String forgotPassword(EmailForgotPasswordDTO request) {
+    public String forgotPassword(EmailForgotPasswordRequest request) {
         User user = userRepository.findByEmail(request.getEmail());
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
@@ -165,7 +164,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String resetPassword(TokenResetPasswordDTO tokenResetPassword) {
+    public String resetPassword(TokenResetPassword tokenResetPassword) {
         final String secretKey = tokenResetPassword.getToken();
         final String username = jwtService.extractUsername(secretKey, TokenType.RESET_TOKEN);
 
@@ -182,7 +181,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String changePassword(ResetPasswordRequestDTO requestDTO) {
+    public String changePassword(ResetPasswordRequest requestDTO) {
         User user = isValidToken(requestDTO.getSecretKey());
 
         if (!requestDTO.getNewPassword().equals(requestDTO.getConfirmNewPassword())) {

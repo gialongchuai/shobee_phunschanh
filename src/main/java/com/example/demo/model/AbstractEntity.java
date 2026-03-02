@@ -15,9 +15,9 @@ import java.util.Date;
 public abstract class AbstractEntity<T> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private T id;
+    private String id;
 
     @CreatedBy
     @Column(name = "created_by")

@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.request.AddressRequestDTO;
+import com.example.demo.dto.request.AddressCreationRequest;
 import com.example.demo.dto.response.AddressResponse;
 import com.example.demo.model.Address;
 
@@ -23,7 +23,7 @@ public class AddressMapper {
         return addressResponse;
     }
 
-    public static Address toAddress(AddressRequestDTO addressRequestDTO) {
+    public static Address toAddress(AddressCreationRequest addressRequestDTO) {
         Address address = Address.builder()
                 .apartmentNumber(addressRequestDTO.getApartmentNumber())
                 .floor(addressRequestDTO.getFloor())
@@ -38,7 +38,7 @@ public class AddressMapper {
         return address;
     }
 
-    public static void updateAddress(Address address, AddressRequestDTO addressRequestDTO) {
+    public static void updateAddress(Address address, AddressCreationRequest addressRequestDTO) {
         address.setApartmentNumber(addressRequestDTO.getApartmentNumber());
         address.setFloor(addressRequestDTO.getFloor());
         address.setBuilding(addressRequestDTO.getBuilding());
