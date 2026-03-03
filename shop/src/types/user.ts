@@ -85,3 +85,5 @@ export interface UserResponse {
   updatedAt: string // ISO string
   updatedBy: string | null
 }
+
+// == Product

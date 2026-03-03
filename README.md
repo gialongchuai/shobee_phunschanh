@@ -1,3 +1,10 @@
+Lưu ý khi chạy ứng dụng:
+Đầu tiên sửa cái ddl-auto thành update cho nó tạo bảng
+sau đó sửa lại thành none hoặc validate hay gì đó đừng để nó tạo lại enum
+là hỏng cái authenticate với role là null hết.
+
+không cần dùng đến file sql nữa do đổi kiểu dữ liệu IDENTITY thành UUID rồi.
+
 Ron tình:
 $ yarn create vite
 name shop
@@ -52,6 +59,7 @@ ctrl + d: chọn nhiều từ giống nhau
 ctrl + r: tìm kiếm project code . recently
 shift + alt + o: Loại bỏ code không dùng
 alt + mũi tên L : quay lại page vừa ctrl + click
+Ctrl+Shift+I : mở nhanh con chat phụ
 
 ---
 

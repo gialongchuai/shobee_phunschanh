@@ -3,7 +3,9 @@ package com.example.demo.service.impl;
 import com.example.demo.constant.UploadFileConstant;
 import com.example.demo.dto.request.ProductCreationRequest;
 import com.example.demo.dto.request.ProductUpdationRequest;
+import com.example.demo.dto.response.PageResponse;
 import com.example.demo.dto.response.ProductResponse;
+import com.example.demo.dto.response.UserResponse;
 import com.example.demo.exception.CategoryErrorCode;
 import com.example.demo.exception.ProductErrorCode;
 import com.example.demo.exception.UploadFileErrorCode;
@@ -12,8 +14,10 @@ import com.example.demo.mapper.custom.ProductMapper;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductImage;
+import com.example.demo.model.User;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.custom.SearchRepository;
 import com.example.demo.service.ProductService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -34,6 +40,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
     ProductMapper productMapper;
     CategoryRepository categoryRepository;
+    SearchRepository searchRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -74,7 +83,9 @@ public class ProductServiceImpl implements ProductService {
             productImages.add(productImage);
         }
         product.setImages(productImages);
-        return productMapper.toProductResponse(productRepository.save(product));
+        Product productEntity = productRepository.save(product);
+        ProductResponse productResponse = productMapper.toProductResponse(productEntity);
+        return productResponse;
     }
 
     private String saveImage(MultipartFile file) {
@@ -158,7 +169,9 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(existingImages);
         product.setCategory(category);
         // Lưu sản phẩm đã cập nhật
-        return productMapper.toProductResponse(productRepository.save(product));
+        Product productEntity = productRepository.save(product);
+        ProductResponse productResponse = productMapper.toProductResponse(productEntity);
+        return productResponse;
     }
 
     @Override
@@ -188,5 +201,30 @@ public class ProductServiceImpl implements ProductService {
     public String deleteProduct(String productId) {
         productRepository.deleteById(productId);
         return "Delete product successfully!";
+    }
+
+    @Override
+    public PageResponse<?> getProductsListOrder(int pageNo, int pageSize, String order, String sortBy, String categoryId, String id, Integer rating, Long priceMin, Long priceMax, String name) {
+        int page = pageNo; // gọi 0 1 cũng ra trang đầu
+        if (pageNo > 0) {
+            page--;
+        }
+
+        Sort.Order orderBy = new Sort.Order(Sort.Direction.fromString(order), sortBy);
+
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(orderBy));
+        Page<Product> productPage = productRepository.getAllProducts(categoryId, id, rating, priceMin, priceMax, name, pageable);
+
+//        List<Product> products = productPage.getContent();
+
+        List<ProductResponse> productResponses = productPage.stream().map(productMapper::toProductResponse).toList();
+
+        return PageResponse.builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .totalPages(productPage.getTotalPages())
+                .totalElements(productPage.getTotalElements())
+                .items(productResponses)
+                .build();
     }
 }

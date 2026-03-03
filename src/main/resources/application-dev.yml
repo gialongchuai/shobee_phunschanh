@@ -27,7 +27,7 @@ spring:
     show-sql: true
 #    show-sql: false -> tắt nếu muốn dùng p6spy
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   kafka:
     bootstrap-servers: localhost:29092
 open:

@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @MappedSuperclass
 public abstract class AbstractEntityResponse<T> {
-    private T id;
+    private String id;
     private T createdBy;
     private T updatedBy;
     private Date createdAt;

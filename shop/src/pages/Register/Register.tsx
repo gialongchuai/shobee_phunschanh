@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser } from "../../apis/auth.api";
+import { authApi } from "../../apis/auth.api";
 import Input from "../../components/Input/Input";
 import type { ApiResponse } from "../../types/api";
 import type { UserRequest } from "../../types/user";
@@ -35,7 +35,7 @@ export default function Register() {
   // Cấu hình Mutation (nếu dùng React Query)
   const registerMutation = useMutation({
     mutationFn: (body: Omit<UserRequest, "confirm_password">) =>
-      createUser(body),
+      authApi.createUser(body),
     onSuccess: (data) => {
       console.log("Đăng ký thành công:", data);
       alert("Đăng ký thành công!");
@@ -49,7 +49,7 @@ export default function Register() {
 
         // Ưu tiên lấy message từ server
         if (data?.message) {
-          msg = data.message;
+          msg = data.message; 
         }
         // // Một số API trả về mảng errors
         // else if (Array.isArray(data?.errors) && data.errors.length > 0) {

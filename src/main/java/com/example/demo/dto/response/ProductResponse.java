@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -20,8 +21,8 @@ public class ProductResponse {
     BigDecimal price;
     String thumbnail;
     String description;
-    LocalDate createdAt;
-    LocalDate updatedAt;
+    Date createdAt;
+    Date updatedAt;
     List<ProductImageResponse> images;
     CategoryResponse categoryResponse;
     // List<OrderDetail> orderDetails;
