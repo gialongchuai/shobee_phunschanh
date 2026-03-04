@@ -1,3 +1,3 @@
-import ProductList from "./ProductListLayout";
+import ProductList from "./ProductList";
 
 export default ProductList;

@@ -8,7 +8,8 @@ const path = {
   register: '/register',
   logout: '/logout',
   productDetail: ':nameId',
-  cart: '/cart'
+  cart: '/cart',
+  BASE_URL: 'http://localhost:8080/uploads/'
 } as const
 
 export default path

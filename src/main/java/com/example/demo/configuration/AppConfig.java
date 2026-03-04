@@ -20,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     CustomUserDetailsService customUserDetailsService;
     PreFilter preFilter;
-    String[] WHITE_LIST = {"/auth/**", "/user/**", "/product/**"};
+    String[] WHITE_LIST = {"/auth/**", "/user/**", "/product/**", "/uploads/**"};
     PasswordEncoder passwordEncoder;
 
     @Override
@@ -44,6 +45,12 @@ public class AppConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:uploads/");
+        // Hoặc đường dẫn tuyệt đối: "file:C:/Users/gialo/.../uploads/"
+    }
 
     // Sau khi thêm depen security thì swagger yêu cầu phải username + password
     @Bean

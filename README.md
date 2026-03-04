@@ -52,6 +52,7 @@ Xóa cái toString tránh debug gọi lồng qua toString giữa các entity mã
 | `Alt + J`          | Chọn nhiều từ giống nhau |
 | `Ctrl + Alt + L`   | Format code              |
 | `Ctrl + Alt + O`   | Loại bỏ code không dùng  |
+Ctrl + Shift + N: Tìm kiếm nhanh User.class, ...
 
 Cho vs code:
 alt + shift + f : format code
@@ -60,6 +61,9 @@ ctrl + r: tìm kiếm project code . recently
 shift + alt + o: Loại bỏ code không dùng
 alt + mũi tên L : quay lại page vừa ctrl + click
 Ctrl+Shift+I : mở nhanh con chat phụ
+Ctrl + Shift + P: Accounts: Sign Out đăng nhập con khác
+Ctrl + Shift + P: Collapse Folders in Explorer để thu nhỏ folder
+Ctrl + P: Tìm kiếm nhanh Page.tsx, ...
 
 ---
 

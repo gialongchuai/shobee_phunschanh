@@ -27,7 +27,7 @@ export default function Header() {
   const purchasesInCart = "abc";
 
   return (
-    <div className='bg-purple-300 pb-5 pt-2 text-white'>
+    <div className='bg-purple-300 pb-5 pt-2 text-black'>
       <div className='container'>
         <NavHeader />
         <div className='mt-4 grid grid-cols-12 items-end gap-4'>

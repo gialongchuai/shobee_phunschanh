@@ -31,14 +31,14 @@ export interface PaginatedProductsResponse {
 
 // == ProdcutRequest ==
 export interface ProductRequest {
-    pageNo?: number; // mặc định 1
-    pageSize?: number; // mặc định 15
+    pageNo?: number | string; // mặc định 1
+    pageSize?: number | string; // mặc định 15
     order?: "asc" | "desc"; // mặc định desc
     sortBy?: string; // created_at, price, name, ...
     categoryId?: string; // lấy trong filter của category
     productId?: string; // loại bỏ productId này
-    rating?: number; // từ rating này trở lên
-    priceMin?: number; // từ priceMin này trở lên
-    priceMax?: number; // từ priceMax này trở xuống
+    rating?: number | string; // từ rating này trở lên
+    priceMin?: number | string; // từ priceMin này trở lên
+    priceMax?: number | string; // từ priceMax này trở xuống
     name?: string; // tìm kiếm theo tên (có thể dùng để search)
 }

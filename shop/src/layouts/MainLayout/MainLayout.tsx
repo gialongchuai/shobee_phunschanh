@@ -9,7 +9,6 @@ export default function MainLayout({children}: Props) {
   return (
     <div>
       <Header />
-      <h1>Main Layout</h1>
       {children}
       <Footer />
     </div>
