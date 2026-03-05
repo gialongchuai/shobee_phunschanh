@@ -30,7 +30,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     CustomUserDetailsService customUserDetailsService;
     PreFilter preFilter;
-    String[] WHITE_LIST = {"/auth/**", "/user/**", "/product/**", "/uploads/**"};
+    String[] WHITE_LIST = {"/auth/**", "/user/**", "/product/**", "/uploads/**", "/category/**"};
     PasswordEncoder passwordEncoder;
 
     @Override

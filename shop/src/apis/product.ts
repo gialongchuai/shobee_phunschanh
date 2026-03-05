@@ -1,5 +1,5 @@
 import type { ApiResponse } from "../types/api";
-import type { PaginatedProductsResponse, ProductRequest, ProductResponse } from "../types/product";
+import type { PaginatedProductsResponse, ProductRequest } from "../types/product";
 import http from "../utils/http";
 
 export const productApi = {

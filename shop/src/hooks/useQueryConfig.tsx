@@ -12,7 +12,7 @@ export default function useQueryConfig() {
   const queryConfig: QueryConfig = omitBy(
     {
       pageNo: queryParams.pageNo || "1",
-      pageSize: queryParams.pageSize || "15",
+      pageSize: queryParams.pageSize || "10",
       sortBy: queryParams.sortBy,
       productId: queryParams.productId,
       name: queryParams.name,

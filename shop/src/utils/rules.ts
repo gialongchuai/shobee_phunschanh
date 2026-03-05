@@ -1,4 +1,5 @@
 // import type { RegisterOptions, UseFormGetValues } from "react-hook-form";
+import type { AnyObject } from "yup";
 import * as yup from "yup";
 // import { AnyObject } from 'yup/lib/types'
 
@@ -123,6 +124,17 @@ const handleConfirmPasswordYup = (refString: string) => {
     .oneOf([yup.ref(refString)], "Nhập lại password không khớp");
 };
 
+function testPriceMinMax(this: yup.TestContext<AnyObject>) {
+  const { priceMax, priceMin } = this.parent as {
+    priceMin: string;
+    priceMax: string;
+  };
+  if (priceMin !== "" && priceMax !== "") {
+    return Number(priceMax) >= Number(priceMin);
+  }
+  return priceMin !== "" || priceMax !== "";
+}
+
 export const schema = yup.object({
   username: yup
     .string()
@@ -178,18 +190,30 @@ export const schema = yup.object({
   addressType: yup.string().required("Loại nhà là bắt buộc").max(100),
   city: yup.string().required("Tỉnh/Thành phố là bắt buộc").max(100),
   country: yup.string().required("Quốc gia là bắt buộc").max(100),
-  // price_min: yup.string().test({
-  //   name: 'price-not-allowed',
-  //   message: 'Giá không phù hợp',
-  //   test: testPriceMinMax
-  // }),
-  // price_max: yup.string().test({
-  //   name: 'price-not-allowed',
-  //   message: 'Giá không phù hợp',
-  //   test: testPriceMinMax
-  // }),
   // name: yup.string().trim().required('Tên sản phẩm là bắt buộc')
+  priceMin: yup.string().default("").test({
+    name: "price-not-allowed",
+    message: "Giá không phù hợp",
+    test: testPriceMinMax,
+  }),
+  priceMax: yup.string().default("").test({
+    name: "price-not-allowed",
+    message: "Giá không phù hợp",
+    test: testPriceMinMax,
+  }),
 });
+
+// priceMin: yup.string().test({
+//   name: 'price-not-allowed',
+//   message: 'Giá không phù hợp',
+//   test: testPriceMinMax
+// }),
+// priceMax: yup.string().test({
+//   name: 'price-not-allowed',
+//   message: 'Giá không phù hợp',
+//   test: testPriceMinMax
+// }),
+
 
 // export const userSchema = yup.object({
 //   name: yup.string().max(160, 'Độ dài tối đa là 160 ký tự'),
