@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import type { ProductRequest } from '../../types/product'
 import useQueryConfig from '../../hooks/useQueryConfig'
 import { productApi } from '../../apis/product'
-import Product from './components/Product'
 import Pagination from '../../components/Pagination'
-import SortProductList from '../SortProductList'
+import SortProductList from './components/SortProductList'
 import categoryApi from '../../apis/category'
-import AsideFilter from '../../components/AsideFilter'
+import AsideFilter from './components/AsideFilter'
+import Product from './components/Product'
 
 export default function ProductList() {
   const queryConfig = useQueryConfig()

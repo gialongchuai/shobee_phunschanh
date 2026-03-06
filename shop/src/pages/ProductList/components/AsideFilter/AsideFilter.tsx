@@ -2,12 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames";
 import { Controller, useForm } from "react-hook-form";
 import { createSearchParams, Link, useNavigate } from "react-router-dom";
-import path from "../../constants/path";
-import type { QueryConfig } from "../../hooks/useQueryConfig";
-import type { Category } from "../../types/category";
-import { schema, type Schema } from "../../utils/rules";
-import Button from "../Button";
-import InputNumber from "../InputNumber";
+import path from "../../../../constants/path";
+import type { QueryConfig } from "../../../../hooks/useQueryConfig";
+import type { Category } from "../../../../types/category";
+import { schema, type Schema } from "../../../../utils/rules";
+import Button from "../../../../components/Button";
+import InputNumber from "../../../../components/InputNumber";
 import { omit } from "lodash";
 import RatingStars from "../RatingStars";
 
@@ -203,7 +203,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
           <div className="mt-1 min-h-[1.25rem] text-center text-sm text-red-600">
             {errors.priceMin?.message}
           </div>
-          <Button className="flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white hover:bg-orange/80">
+          <Button className="flex w-full items-center justify-center bg-purple-400 p-2 text-sm uppercase text-white hover:bg-purple-400/80">
             Áp dụng
           </Button>
         </form>
@@ -214,7 +214,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       <div className='my-4 h-[1px] bg-gray-300' />
       <Button
         onClick={handleRemoveAll}
-        className='flex w-full items-center justify-center bg-orange p-2 text-sm uppercase text-white hover:bg-orange/80'
+        className='flex w-full items-center justify-center bg-purple-400 p-2 text-sm uppercase text-white hover:bg-purple-400/80'
       >
         Xóa tất cả
       </Button>

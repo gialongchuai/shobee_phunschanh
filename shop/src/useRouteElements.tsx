@@ -6,8 +6,9 @@ import Register from "./pages/Register";
 import MainLayout from "./layouts/MainLayout";
 import Profile from "./pages/Profile";
 import { AppContext } from "./contexts/app.context";
-import { useContext } from "react";
+import { Suspense, useContext } from "react";
 import path from "./constants/path";
+import ProductDetail from "./pages/ProductDetail";
 
 function ProtectedRouter() {
   const { isAuthenticated } = useContext(AppContext);
@@ -65,6 +66,16 @@ export default function useRouteElements() {
           <ProductList />
         </MainLayout>
       ),
+    },
+    {
+      path: path.productDetail,
+      element: (
+        <MainLayout>
+          <Suspense>
+            <ProductDetail />
+          </Suspense>
+        </MainLayout>
+      )
     },
   ]);
 

@@ -104,7 +104,7 @@ export default function Register() {
               noValidate
               onSubmit={onSubmit}
             >
-              <div className="text-2xl font-bold text-center text-red-500 mb-8 uppercase">
+              <div className="text-2xl font-bold text-center text-black mb-8 uppercase">
                 Đăng ký tài khoản mới
               </div>
 
@@ -372,7 +372,7 @@ export default function Register() {
               <div className="mt-6 flex items-center justify-center text-sm">
                 <span className="text-gray-500">Bạn đã có tài khoản?</span>
                 <Link
-                  className="ml-2 text-red-500 font-semibold hover:underline"
+                  className="ml-2 text-purple-400 font-semibold hover:underline"
                   to={path.login}
                 >
                   Đăng nhập tại đây

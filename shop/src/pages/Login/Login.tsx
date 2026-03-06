@@ -185,7 +185,7 @@ export default function Login() {
               <div className="mt-3 flex items-center justify-center text-sm">
                 <span className="text-gray-500">Bạn chưa đã có tài khoản?</span>
                 <Link
-                  className="ml-2 text-red-500 font-semibold hover:underline"
+                  className="ml-2 text-purple-400 font-semibold hover:underline"
                   to={path.register}
                 >
                   Đăng ký tại đây

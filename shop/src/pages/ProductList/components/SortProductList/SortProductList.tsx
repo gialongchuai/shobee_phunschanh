@@ -1,10 +1,10 @@
 import classNames from 'classnames'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import omit from 'lodash/omit'
-import type { QueryConfig } from '../../hooks/useQueryConfig'
-import type { ProductRequest } from '../../types/product'
-import path from '../../constants/path'
-import { sortBy as sortField, order as orderConstant } from '../../constants/product'
+import type { QueryConfig } from '../../../../hooks/useQueryConfig'
+import type { ProductRequest } from '../../../../types/product'
+import path from '../../../../constants/path'
+import { sortBy as sortField, order as orderConstant } from '../../../../constants/product'
 interface Props {
   queryConfig: QueryConfig
   totalPages: number

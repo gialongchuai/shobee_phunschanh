@@ -36,7 +36,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
                     "AND (:rating IS NULL OR rating >= :rating) " +
                     "AND (:priceMin IS NULL OR price >= :priceMin) " +
                     "AND (:priceMax IS NULL OR price <= :priceMax) " +
-                    "AND (:name IS NULL OR :name = '' OR name LIKE CONCAT('%', :name, '%') OR description LIKE CONCAT('%', :name, '%'))"
+                    "AND (:name IS NULL OR :name = '' OR LOWER(name) LIKE CONCAT('%', :name, '%') OR LOWER(description) LIKE CONCAT('%', :name, '%'))"
     )
     Page<Product> getAllProducts(
             @Param("categoryId") String categoryId,

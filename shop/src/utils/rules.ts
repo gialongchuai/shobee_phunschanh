@@ -190,7 +190,6 @@ export const schema = yup.object({
   addressType: yup.string().required("Loại nhà là bắt buộc").max(100),
   city: yup.string().required("Tỉnh/Thành phố là bắt buộc").max(100),
   country: yup.string().required("Quốc gia là bắt buộc").max(100),
-  // name: yup.string().trim().required('Tên sản phẩm là bắt buộc')
   priceMin: yup.string().default("").test({
     name: "price-not-allowed",
     message: "Giá không phù hợp",
@@ -201,6 +200,7 @@ export const schema = yup.object({
     message: "Giá không phù hợp",
     test: testPriceMinMax,
   }),
+  name: yup.string().trim().lowercase().required('Tên sản phẩm là bắt buộc')
 });
 
 // priceMin: yup.string().test({
