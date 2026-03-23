@@ -1,443 +1,214 @@
-Lưu ý khi chạy ứng dụng:
-Đầu tiên sửa cái ddl-auto thành update cho nó tạo bảng
-sau đó sửa lại thành none hoặc validate hay gì đó đừng để nó tạo lại enum
-là hỏng cái authenticate với role là null hết.
+# 🛒 Shobee Phunschanh - Fullstack E-Commerce Project
 
-không cần dùng đến file sql nữa do đổi kiểu dữ liệu IDENTITY thành UUID rồi.
-
-Ron tình:
-$ yarn create vite
-name shop
-cd shop
-change port 3000
-yarn add -D tailwindcss@3.1.8 postcss@8.4.18 autoprefixer@10.4.12
-
-yarn tailwindcss init -p
-
-change info trong file tailwind.config.cjs
-
-yarn add react-hook-form
-
-yarn add @tanstack/react-query@^5.90.12 @tanstack/react-query-devtools@^5.91.1 yup@^0.32.11 lodash@^4.17.21 axios@^1.1.3
-
-nói chung là chỉnh nhiều lắm có gì vào package json xem lại nhé
-
-thăng tailwindcss thì css cho nó dễ nhưng trong mấy cái tsx
-muốn nhận nó đôi khi bị lỗi không nhận thêm cái @tailwindcss line clapm gì đó :vv
-
-yarn add @floating-ui/react-dom-interactions
-yarn add framer-motion
-2 cái này để lastest cho nó phù hợp với react 19
-
---- Frontend
-
-Thằng yup nó validate mấy cía form bên rule
-qua bên Page tsx thì chỉ cần pick mấy cái nó validate mà thôi
-
-Thằng composnent đa số chứa mấy cía dùng chug ví dụ Ipunt nhận cía prop bên tsx truyền qua
-nó hứng rồi return ra jsx tương thích
-
+**Lưu ý:** ***Phần README này mình đưa chat nó gen cho không biết có ok không, nên có gì hãy đọc code để hiểu rõ hơn. Hiện tại mình code chưa xong hẳn, có gì sau này sẽ cập nhật thêm nha.***
 
 ---
 
-Xóa cái toString tránh debug gọi lồng qua toString giữa các entity mãi không debug được
+## 📖 Giới thiệu chung
+Dự án **Shobee Phunschanh** là một ứng dụng thương mại điện tử (E-Commerce) được xây dựng theo mô hình Client-Server hiện đại. Dự án tập trung vào việc quản lý sản phẩm, thông tin người dùng, cung cấp quá trình xác thực/phân quyền chặt chẽ với hệ thống RESTful API kết nối với giao diện React mượt mà và trực quan.
+
+## 💡 Góc chia sẻ (Trải nghiệm kỹ thuật & Debug)
+
+## ⌨️ Phím tắt IntelliJ IDEA
+
+- `Ctrl + Shift + F`: Tìm kiếm toàn bộ project  
+- `Ctrl + Shift + N`: Tìm nhanh file (vd: User.class)  
+- `Alt + J`: Chọn nhiều từ giống nhau  
+- `Ctrl + Alt + L`: Format code  
+- `Ctrl + Alt + O`: Loại bỏ import/code không sử dụng  
 
 ---
 
-## ⌨️ Phím tắt IntelliJ
+## ⌨️ Phím tắt VS Code
 
-| Phím tắt           | Chức năng                |
-| ------------------ | ------------------------ |
-| `Ctrl + Shift + F` | Tìm kiếm nhanh           |
-| `Alt + J`          | Chọn nhiều từ giống nhau |
-| `Ctrl + Alt + L`   | Format code              |
-| `Ctrl + Alt + O`   | Loại bỏ code không dùng  |
-Ctrl + Shift + N: Tìm kiếm nhanh User.class, ...
+- `Alt + Shift + F`: Format code  
+- `Ctrl + D`: Chọn nhiều từ giống nhau  
+- `Ctrl + R`: Mở file gần đây (recent files)  
+- `Shift + Alt + O`: Loại bỏ import/code không sử dụng  
+- `Alt + ←`: Quay lại vị trí trước (sau khi Ctrl + Click)  
+- `Ctrl + Shift + I`: Mở chat phụ (tuỳ extension)  
+- `Ctrl + Shift + P`: Mở Command Palette  
+- `Ctrl + P`: Tìm nhanh file (vd: Page.tsx)  
 
-Cho vs code:
-alt + shift + f : format code
-ctrl + d: chọn nhiều từ giống nhau
-ctrl + r: tìm kiếm project code . recently
-shift + alt + o: Loại bỏ code không dùng
-alt + mũi tên L : quay lại page vừa ctrl + click
-Ctrl+Shift+I : mở nhanh con chat phụ
-Ctrl + Shift + P: Accounts: Sign Out đăng nhập con khác
-Ctrl + Shift + P: Collapse Folders in Explorer để thu nhỏ folder
-Ctrl + P: Tìm kiếm nhanh Page.tsx, ...
+### 📌 Một số lệnh trong Command Palette
 
----
+- `Accounts: Sign Out`: Đăng xuất tài khoản  
+- `Collapse Folders in Explorer`: Thu gọn toàn bộ thư mục  
 
-# 🚀 Java Spring Boot Project
+## 🚀 Công nghệ sử dụng (Tech Stack)
 
-## 📋 Mục lục
+### Backend (Java Spring Boot)
+- **Framework:** Spring Boot 4.0.1, Java 17
+- **Database:** PostgreSQL, Spring Data JPA, Hibernate
+- **Security:** Spring Security, JSON Web Token (JWT) cho xác thực không trạng thái (stateless authentication)
+- **API Documentation:** Springdoc OpenAPI (Swagger UI) 2.8.8
+- **Các thư viện khác:** Spring Kafka, Spring Mail, MapStruct, Lombok, P6Spy (SQL Logger), Thymeleaf
 
-- [Cài đặt & Khởi chạy](#-cài-đặt--khởi-chạy)
-- [Phím tắt IntelliJ](#-phím-tắt-intellij)
-- [LazyInitializationException](#-lazyinitializationexception)
-- [Cấu hình môi trường](#-cấu-hình-môi-trường)
-- [P6Spy - SQL Logger](#-p6spy---sql-logger)
-- [Swagger API Documentation](#-swagger-api-documentation)
-- [API Endpoints](#-api-endpoints)
-- [Mô hình phân quyền RBAC](#-mô-hình-phân-quyền-rbac)
-- [Spring Security + JWT Flow](#-spring-security--jwt-flow)
-- [Internationalization](#-internationalization)
-- [Architecture Diagram](#-architecture-diagram)
+### Frontend (React & Vite)
+- **Core:** React 19, TypeScript, Vite 7
+- **Giao diện (Styling):** Tailwind CSS 3, Framer Motion (Animation), @floating-ui/react-dom-interactions
+- **Routing:** React Router DOM 7
+- **Data Fetching & State:** TanStack React Query 5, Axios
+- **Form & Validation:** React Hook Form, Yup
 
 ---
 
-## 🛠 Cài đặt & Khởi chạy
+## 📂 Cấu trúc thư mục (Directory Structure)
 
-### 1. Chạy Docker Compose
+### 🖥️ Backend (Thư mục gốc)
+Cấu trúc theo chuẩn N-Tier Architecture của Spring Boot:
+```text
+.
+├── src/main/java/com/example/demo
+│   ├── configuration/   # Cấu hình Spring, CORS, Swagger, Database Loader
+│   ├── constant/        # Các hằng số (Role, Permission, API Path,...)
+│   ├── controller/      # REST API Endpoints phục vụ Frontend
+│   ├── dto/             # Data Transfer Objects cho Request/Response
+│   ├── exception/       # Xử lý ngoại lệ tập trung (GlobalExceptionHandler)
+│   ├── mapper/          # MapStruct interfaces chuyển đổi qua lại Entity <-> DTO
+│   ├── model/           # JPA Entities (Định nghĩa bảng CSDL: User, Role, Address)
+│   ├── repository/      # Spring Data JPA Repositories
+│   ├── service/         # Business logic cốt lõi
+│   └── util/            # Các hàm hỗ trợ, utils (Format, Validate,...)
+├── src/main/resources/
+│   ├── application.yml        # Cấu hình chung của ứng dụng
+│   ├── application-dev.yml    # Cấu hình cho môi trường phát triển (Port 8080, DB config)
+│   ├── messages_*.properties  # Các file properties hỗ trợ Đa ngôn ngữ (i18n)
+│   └── templates/             # HTML Templates (để gửi email bằng Thymeleaf)
+├── docker-compose.yml   # Cài đặt Docker cho PostgreSQL, Kafka, v.v.
+├── pom.xml              # Đóng gói và quản lý dependencies của Maven
+└── postgresql.sql       # Script khởi tạo cơ sở dữ liệu
+```
 
+### 📱 Frontend (Thư mục `/shop`)
+```text
+shop/
+├── src/
+│   ├── apis/            # Tổ chức các hàm gọi RESTful API bằng Axios
+│   ├── assets/          # Static assets: Hình ảnh tĩnh, SVG, Font chữ
+│   ├── components/      # UI components dùng chung (Button, Input, Pagination, Header, Footer)
+│   ├── constants/       # Hằng số cấu hình, định tuyến đường dẫn (path)
+│   ├── contexts/        # Auth Context quản lý trạng thái đăng nhập toàn cục
+│   ├── hooks/           # Các Custom hook tái sử dụng logic (useQuery)
+│   ├── layouts/         # Bố cục giao diện: MainLayout, RegisterLayout
+│   ├── pages/           # Giao diện chính: Login, Register, Profile, ProductList, ProductDetail
+│   ├── types/           # Type definitions chung của TypeScript
+│   ├── utils/           # Helper functions (Validate form, format date/money, cấu hình file)
+│   ├── App.tsx          # React Root Component
+│   ├── main.tsx         # File khởi chạy chính của Vite + React
+│   └── useRouteElements.tsx # Cấu hình React Router (Protected / Rejected routing)
+├── index.html           # HTML gốc, entry point của app
+├── package.json         # Danh sách NPM packages, scripts build
+├── tailwind.config.cjs  # Cấu hình file utility class của Tailwind CSS
+└── vite.config.ts       # Cấu hình trình đóng gói Vite
+```
+
+---
+
+## ⚙️ Hướng dẫn cài đặt và chạy dự án (Installation & Run)
+
+### 1. Khởi chạy Database bằng Docker
+Yêu cầu: Có cài đặt Docker và Docker Compose.
 ```bash
+# Khởi chạy các container nền (PostgreSQL, Kafka, v.v.)
 docker compose up -d
 ```
+*Lưu ý:* Cần phải tạo Database bằng cách sao chép nội dung file `postgresql.sql` và chạy vào hệ quản trị CSDL kết nối tới `localhost:5432` như đã dọn sẵn ở `docker-compose.yml`. (Tài khoản/Mật khẩu lưu trong file dev yml hoặc docker file).
 
-### 2. Kết nối PostgreSQL
+\*  **Lưu ý cho lần đầu chạy Spring Boot (LazyInitializationException / Khởi tạo bảng):** 
+1. Đảm bảo cấu hình `ddl-auto: update` để tự sinh các bảng không có trong script sql.
+2. Sau khi sinh xong, set lại bằng `none` hoặc `validate` để tránh tạo lại làm mất cái enum, cái này mình chưa fix nữa.
+Kể từ lúc cấu hình xong, Identity ID chuyển thành UUID do đó không cần import SQL file nữa.
 
-- Login web với **localhost** sử dụng thông tin trong file `docker-compose.yml`
-
-### 3. Tạo Database
-
-- Tạo mới database trên PostgreSQL với file `postgresql.sql`
-- Dán nội dung vào và chạy để tạo bảng
-
----
-
-
-## ⚠️ LazyInitializationException
-
-### Vấn đề gặp phải
-
-Lỗi xảy ra khi `User` set `lazy` tới `UserHasRole`:
-
-**Tại tầng Service (Login/Authenticate):**
-
-- Khi gọi tới `loadUser` của `UserDetail`, sau đó gọi tới `authen.getAuthority` có `roles` trong đó → **KHÔNG bị lazy**
-- Nguyên nhân: Vẫn còn kết nối transaction của Spring
-
-**Tại tầng PreFilter:**
-
-- Khi gọi tới `loadUser` qua `username`, sau đó gọi tới `loadUserDetail` → **BỊ lỗi `LazyInitializationException`** khi gọi tới method `getAuthor`
-- Nguyên nhân: Đã mất kết nối của Spring
-
-### ✅ Giải pháp
-
-Tách `UserDetails` ra riêng và sẽ luôn load được `Role`
-
-### 📝 Lưu ý về SecurityContextHolder
-
-| Trường hợp                     | Có cần setContext? | Lý do                                                                   |
-| ------------------------------ | ------------------ | ----------------------------------------------------------------------- |
-| Login (authenticate) ở Service | ❌ Không           | Trả về token, không dùng tới context sau đó                             |
-| API có kèm token ở PreFilter   | ✅ Có              | Controller cần xử lý `@PreAuthorize` hoặc lấy `username`, `id` từ token |
-
----
-
-## 🔧 Cấu hình môi trường
-
-### File `application.yml`
-
-```yaml
-spring:
-  profiles:
-    active: dev
-```
-
-> **Note:** Mặc định đúng là `@spring.profiles.active@` để khi build bằng Maven có thể chỉ định môi trường
-
-### Maven Build Commands
-
+### 2. Chạy Backend (Spring Boot)
+Yêu cầu: JDK 17, Maven (`mvnw` đã tồn tại trong thư mục).
 ```bash
-# Build với profile cụ thể
-mvn package -P test
-mvn clean package -P dev
+# Clean và đóng gói không test
+./mvnw clean package -DskipTests
 
-# Build với nhiều profile
-mvn clean package -P test,dev
-
-# Build ngoại trừ môi trường
-mvn clean package -P !dev
+# Chạy Backend (chỉ định profile dev)
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
+Backend sẽ khởi chạy tại: `http://localhost:8080/`.
 
-### File test CORS
+### 3. Chạy Frontend (React Vite)
+Yêu cầu: Node.js version mới nhất (hiện tại mình dùng v24.11.1), đã cài đặt `yarn`.
+```bash
+cd shop
 
-File `call_api_cors.html` để chạy thử CORS trên FE call tới API backend test.
+# Cài đặt tất cả phụ thuộc (Dependencies)
+yarn install
+
+# Khởi chạy Server Development
+yarn dev
+```
+Frontend sẽ được Build bằng Vite và mở nhanh chóng tại Port 3000 (Localhost). `yarn build` sẽ chạy qua tiến trình `tsc -b` sau đó ra production build.
 
 ---
 
-## 📊 P6Spy - SQL Logger
-
-Giúp log SQL dễ xem hơn.
-
-### Cấu hình cần thiết:
-
-1. Tạo file `spy.properties`
-2. Thêm config vào `application-dev.yml`
-3. Config class `CompactSqlFormatter` trong package `config`
-
-### Output mẫu:
-
-```sql
-[SQL]
-ExecutionTime: 3ms | Connection: 0 | UserServiceImpl.saveUser:85 |
-insert into tbl_address (address_type, apartment_number, building, city, country,
-created_at, created_by, floor, street, street_number, updated_at, updated_by, user_id)
-values (1, 'K13', 'Sunrise City', 'Ho Chi Minh', 'Vietnam',
-'2026-01-27T08:26:12.382+0700', NULL, '12', 'Nguyen Huu Tho', '123',
-'2026-01-27T08:26:12.382+0700', NULL, 70)
-```
-
----
-
-## 📖 Swagger API Documentation
-
-### Truy cập Swagger UI
-
-```
-http://localhost:8080/swagger-ui/index.html
-```
-
-### Export sang Postman
-
-1. Bấm vào `/v3/api-docs/api-service-1` để xem JSON
-2. Lưu file (như `api-document-get-from-swagger.json` trong thư mục)
-3. Import vào Postman
-
-> Dependency: OpenAPI (có kèm Swagger)
-
----
-
-## 🔗 API Endpoints
-
-### User CRUD
-
-| Method   | Endpoint                     | Mô tả                                        |
-| -------- | ---------------------------- | -------------------------------------------- |
-| `POST`   | `/user/`                     | Tạo user mới                                 |
-| `PUT`    | `/user/{id}`                 | Update user                                  |
-| `PATCH`  | `/user/{id}?status={status}` | Thay đổi status (NONE \| ACTIVE \| INACTIVE) |
-| `DELETE` | `/user/{id}`                 | Xóa user                                     |
-| `GET`    | `/user/{id}`                 | Lấy thông tin user                           |
-
-### Phân trang & Tìm kiếm
-
-#### 1. List với 1 tiêu chí sort
-
-```
-GET /user/list?pageNo=1&pageSize=10&sortBy=lastName:asc
-```
-
-#### 2. List với nhiều tiêu chí sort
-
-```
-GET /user/list-order-with-multiple-columns?pageNo=1&pageSize=10&sortBy=lastName:asc,id:desc
-```
-
-#### 3. List với EntityManager (customize query)
-
-```
-GET /user/list-order-with-multiple-columns-and-search?pageNo=0&pageSize=10&search=th&sortBy=id:asc
-```
-
-#### 4. List với Criteria
-
-> Sort 1 cột, search (nhiều field của User), 1 field của bảng đã join là Address
-
-```
-GET /user/list-advance-search-with-specification?page=0&size=5&sort=id&user=firstName~a&address=city~a
-```
-
-#### 5. List với Specification
-
-> Sort của pageable, search nhiều field dựa vào Spec join 2 column. Tự custom toán tử và join 2 bảng qua AND/OR
-
-```
-GET /user/list-advance-search-with-specification?page=0&size=5&sort=id&user=firstName~a&address=city~a,street~T
-```
-
-**Lưu ý các trường hợp:**
-| TH | Điều kiện | Xử lý |
-|----|-----------|-------|
-| 1 | Không truyền user và address | Spring `findAll` với pageable → tự sort |
-| 2 | Chỉ có user | `findAll` với Spec và pageable → tự sort |
-| 3 | Có cả user và address | Dùng EntityManager → phải custom từng cái (page, size đã làm, **sort chưa implement**) |
-
-> ⚠️ **TH3: Sort không hoạt động!**
-
----
-
-## 🔐 Mô hình phân quyền RBAC
-
-### So sánh mô hình
-
-| Mô hình  | Tên đầy đủ                | Use case                     |
-| -------- | ------------------------- | ---------------------------- |
-| **RBAC** | Role-Based Access Control | Outsourcing, Ngân hàng       |
-| **ACL**  | Access Control List       | Thương mại điện tử: AWS, ... |
-
-> Dự án này sử dụng mô hình **RBAC**
-
-### 👥 Roles
-
-| Role       | Mô tả                               | Phạm vi                                             |
-| ---------- | ----------------------------------- | --------------------------------------------------- |
-| `sysadmin` | Quản trị hệ thống: IT, phần cứng    | Toàn hệ thống, **KHÔNG** thao tác nghiệp vụ         |
-| `admin`    | Full quyền nghiệp vụ (CEO, Tổng GĐ) | Nghiệp vụ kinh doanh, **KHÔNG** điều chỉnh hệ thống |
-| `manager`  | Teamlead, Trưởng bộ phận            | Phòng ban                                           |
-| `user`     | Nhân viên thường                    | Xem, Thêm, Sửa (không xóa)                          |
-
-### 🔑 Permissions
-
-| Permission    | Mô tả                             | Ai thường có?        |
-| ------------- | --------------------------------- | -------------------- |
-| `Full Access` | Đủ tất cả quyền                   | sysadmin             |
-| `View`        | Xem dữ liệu                       | user                 |
-| `Add`         | Thêm bản ghi                      | user, manager        |
-| `Update`      | Cập nhật bản ghi                  | user, manager        |
-| `Delete`      | Xóa bản ghi                       | admin                |
-| `Upload`      | Tải lên tài liệu                  | admin, user, manager |
-| `Import`      | Insert hàng loạt (Excel)          | admin, manager, user |
-| `Export`      | Xuất báo cáo, Excel               | manager, CEO         |
-| `Send`        | Gửi                               | -                    |
-| `Share`       | Chia sẻ (gán quyền xem, sửa file) | -                    |
-
-> **💡 Lưu ý về Add/Update trong ngân hàng:**
->
-> - Outsource thường gộp chung thành "Edit"
-> - Tín dụng tách riêng: Chuyên viên tạo hồ sơ, nhưng phải có Thẩm định viên/Giám sát viên/Manager để **Approve**
-
----
-
-## 🔒 Spring Security + JWT Flow
-
-> Khi tích hợp Spring Security với JWT cho xác thực stateless
-
-### Giai đoạn 1: Đăng nhập
-
-#### Request
-
-```http
-POST /auth/access
-Content-Type: application/json
-
-{
-  "username": "sysadmin",
-  "password": "123456"
-}
-```
-
-#### Flow chi tiết
-
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Controller
-    participant AuthService
-    participant AuthManager
-    participant DaoAuthProvider
-    participant UserDetailsService
-    participant DB
-
-    Client->>Controller: POST /auth/access
-    Controller->>AuthService: authenticate()
-    AuthService->>AuthManager: authenticate(UsernamePasswordToken)
-    AuthManager->>DaoAuthProvider: authenticate()
-    DaoAuthProvider->>UserDetailsService: loadUserByUsername()
-    UserDetailsService->>DB: SELECT * FROM tbl_user WHERE username = ?
-    DB-->>UserDetailsService: User data
-    UserDetailsService-->>DaoAuthProvider: UserDetails
-    DaoAuthProvider->>DaoAuthProvider: So sánh password với PasswordEncoder
-    DaoAuthProvider-->>AuthService: Authentication (đã xác thực)
-    AuthService->>AuthService: Tạo JWT Token
-    AuthService-->>Controller: Token
-    Controller-->>Client: Response with Token
-```
-
-| Bước | Mô tả                                                                                              |
-| ---- | -------------------------------------------------------------------------------------------------- |
-| 1.1  | Controller nhận request, gọi `AuthenticationService.authenticate()`                                |
-| 1.2  | Tạo `UsernamePasswordAuthenticationToken`, truyền vào `authenticationManager.authenticate()`       |
-| 1.3  | `DaoAuthenticationProvider` gọi `loadUserByUsername()` → **Query lần 1**                           |
-| 1.4  | So sánh mật khẩu với `PasswordEncoder`                                                             |
-| 1.5  | ⚠️ **Truy vấn dư thừa**: Code hiện tại gọi lại `userRepository.findByUsername()` → **Query lần 2** |
-| 1.6  | Tạo JWT token và trả về client                                                                     |
-
-> **Kết thúc:** Client có token, server không lưu session (`SessionCreationPolicy.STATELESS`)
-
----
-
-### Giai đoạn 2: Gọi API được bảo vệ
-
-#### Request
-
-```http
-GET /user/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
-```
-
-#### Flow chi tiết
-
-| Bước | Mô tả                                                                     |
-| ---- | ------------------------------------------------------------------------- |
-| 2.1  | Endpoint `/user/1` không nằm trong `WHITE_LIST` → cần xác thực            |
-| 2.2  | `PreFilter.doFilterInternal()` xử lý token                                |
-| 2.3  | Load user từ token → **Query lần 3**                                      |
-| 2.4  | Controller gọi `userService.getUser(1L)` → **Query lần 4**                |
-| 2.5  | Jackson serialize, kích hoạt lazy load `getAddresses()` → **Query lần 5** |
-
-#### PreFilter Logic
-
-```java
-// Trong PreFilter.doFilterInternal()
-1. Lấy header Authorization
-2. Nếu rỗng hoặc không có "Bearer " → bỏ qua, Spring Security chặn (401)
-3. Nếu có token hợp lệ:
-   - Trích xuất username từ JWT subject
-   - Kiểm tra SecurityContext đã có authentication chưa
-   - Gọi UserDetailsService.loadUserByUsername()
-   - Xác minh token (thời hạn, chữ ký)
-   - Tạo Authentication và lưu vào SecurityContextHolder
-```
-
----
-
-### 📊 Tổng kết Query
-
-| #   | Query                                       | Giai đoạn                      |
-| --- | ------------------------------------------- | ------------------------------ |
-| 1   | `SELECT FROM tbl_user WHERE username = ?`   | Login - xác thực (bắt buộc)    |
-| 2   | `SELECT FROM tbl_user WHERE username = ?`   | Login - **dư thừa** ⚠️         |
-| 3   | `SELECT FROM tbl_user WHERE username = ?`   | PreFilter - load user từ token |
-| 4   | `SELECT FROM tbl_user WHERE id = ?`         | Controller - getUser           |
-| 5   | `SELECT FROM tbl_address WHERE user_id = ?` | Lazy load addresses            |
-
-> **Tổng:** 5 queries cho 2 requests (1 login + 1 API call)
-
-### 📝 Lưu ý quan trọng
-
-- ✅ Mọi request có token đều đi qua `PreFilter`
-- ✅ Endpoint yêu cầu xác thực **BẮT BUỘC** phải có token hợp lệ
-- ✅ Các request trong `WHITE_LIST` (như `/auth/access`, `/swagger-ui/**`) không bị chặn
-
----
-
-## 🌐 Internationalization
-
-Có thể truyền thêm header để thay đổi ngôn ngữ:
-
-```http
-Accept-Language: vi-VN
-Accept-Language: en-US
-Accept-Language: mx-MX
-```
+## 🌟 Các chức năng chính (Main Functionalities)
+
+### Frontend
+- **Hệ thống Routing an toàn:** 
+  - *Protected Router:* Chỉ truy cập được `Profile` và các trang cá nhân nếu đã xác thực.
+  - *Rejected Router:* Đã đăng nhập thì chặn truy cập ngược lại `/login` hay `/register`.
+- **Trải nghiệm UX/UI tĩnh:**
+  - Danh sách sản phẩm (`ProductList`), Trang chi tiết (`ProductDetail`).
+  - Giao diện đẹp, chuẩn responsive nhờ **Tailwind CSS**, Validation qua rule chặt chẽ với **Yup**.
+  - Cache API mượt mà và re-fetching background bằng **TanStack React Query**.
+
+### Backend
+- **Xác thực phi trạng thái (Stateless Auth):**
+  - Quản lý Security thông qua JSON Web Token (Access Key, Refresh Key với Expiry tách biệt). ContextHolder được nạp thông qua `PreFilter.doFilterInternal()`.
+- **Mô hình RBAC Chuyên sâu (Role-Based Access Control):**
+  - Phân tách quyền nghiêm ngặt tới từng role (`sysadmin`, `admin`, `manager`, `user`).
+  - Permissions rõ ràng (`Full Access`, `View`, `Add`, `Update`, `Delete`, `Upload`...).
+- **Xử lý Query Linh Hoạt, Đa Điều Kiện (Phân trang & Tìm kiếm):**
+  - **1. List với 1 tiêu chí sort:**
+    `GET /user/list?pageNo=1&pageSize=10&sortBy=lastName:asc`
+  - **2. List với nhiều tiêu chí sort:**
+    `GET /user/list-order-with-multiple-columns?pageNo=1&pageSize=10&sortBy=lastName:asc,id:desc`
+  - **3. List với EntityManager (customize query):**
+    `GET /user/list-order-with-multiple-columns-and-search?pageNo=0&pageSize=10&search=th&sortBy=id:asc`
+  - **4. List với Criteria:**
+    *(Sort 1 cột, search nhiều field của User và 1 field thuộc bảng đã join là Address)*
+    `GET /user/list-advance-search-with-specification?page=0&size=5&sort=id&user=firstName~a&address=city~a`
+  - **5. List với Specification:**
+    *(Sort của pageable, search nhiều field dựa vào Spec join 2 cột, kết nối AND/OR tùy biến)*
+    `GET /user/list-advance-search-with-specification?page=0&size=5&sort=id&user=firstName~a&address=city~a,street~T`
+  
+  *💡 Phân loại xử lý các trường hợp Tìm Kiếm & Lọc:*
+  - **TH1:** Không truyền user hay address ➡️ Dùng Spring `findAll` kèm Pageable (tự động Sort).
+  - **TH2:** Chỉ có trường dữ liệu user ➡️ Dùng `findAll` kết hợp Specification và Pageable (tự động Sort).
+  - **TH3:** Có cả user và address ➡️ Dùng `EntityManager` tự xây dựng query phức tạp. (Đã xử lý Page, Size. ⚠️ **Lưu ý: Sort chưa hoạt động ở TH3! Mình định làm TH3 chat luôn cho nhanh mà chưa kịp làm xong, có gì sau này sẽ cập nhật thêm nha.**)
+- **Tối Ưu Hoá Log (P6Spy): Có gì bật mấy file liên quan tới P6Spy lên là thấy log SQL**
+  - Ghi đè cấu hình ghi log SQL siêu trực quan giúp Debug Query thay vì dùng `show-sql` mặc định của Hibernate. Tính performance cho 1 truy vấn database cực nhanh.
+- **REST APIs Tự Động Hóa (Swagger):** 
+  - UI Docs tại `http://localhost:8080/swagger-ui/index.html`.
+  - Xuất ra JSON để import dễ dàng vào Postman (`api-document-get-from-swagger.json`).
+- **Tùy chọn Đa Ngôn Ngữ (i18n):**
+  - Tự động thay đổi ngôn ngữ Resource theo thẻ Header Request `Accept-Language: vi-VN` | `en-US` | `mx-MX`.
 
 ---
 
 ## 📐 Architecture Diagram
 
-<img width="638" height="393" alt="Architecture" src="https://github.com/user-attachments/assets/101f06b8-4dd0-420c-855f-660a2c31ac60" />
+<img width="2778" height="1460" alt="Untitled (3)" src="https://github.com/user-attachments/assets/9b906369-91a6-4e6a-ae71-ebf8e0a7a583" />
 
 ---
 
-> 📅 _Last updated: January 2026_
+### ⚠️ Xử lý `LazyInitializationException`
+Khi cấu hình Model với `FetchType.LAZY` (User lấy Role):
+- Ở Layer Service, khi trong block Transaction, ta gọi Fetch thì sẽ không lỗi.
+- Ở Layer Filter (Ví dụ: `PreFilter`), Spring Security bị mất Session/Transaction, khiến cho việc trích xuất Authorities bị văng exception.
+**Giải quyết:** Tách việc load `UserDetails` ra riêng lẻ để Spring luôn kéo được Entity kèm theo Role thông qua truy vấn chuẩn mà không gặp proxy rỗng.
+
+### 🔐 Spring Security + JWT Flow Tóm lược
+1. Người dùng POST account cho `/auth/access`.
+2. Truy xuất tới `AuthService` -> `AuthManager` -> `DaoAuthProvider` xác minh Hash mật khẩu chuẩn trong DB.
+3. Controller trả lại Bearer Token. Phiên (Session) là `STATELESS`.
+4. Với những Resource có bảo vệ (ví dụ `/user/1`), hệ thống filter sẽ kiểm tra Header. Nếu hợp lệ, load Token vào SecurityContextHolder để xử lý.
+**Lưu ý:** Filter yêu cầu tối ưu gọi Database (đã giảm từ 5 Query/Request xuống tối ưu hơn)!
+
+---
+> 📅 **Cập nhật lần cuối:** Bản phân tích Code Base Tháng 23/03/2026.
